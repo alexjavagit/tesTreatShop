@@ -1,9 +1,12 @@
 package ua.kiev.prog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.prog.entity.CustomUser;
+import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.entity.UserRole;
 import ua.kiev.prog.repository.UserRepository;
 import java.util.List;
@@ -23,6 +26,33 @@ public class UserServiceImpl  implements UserService {
         return userRepository.findByLogin(login);
     }
 
+    @Transactional(readOnly = true)
+    public Page<CustomUser> getAllUsers(Pageable pageable) {
+        Page<CustomUser> list = userRepository.findAll(pageable);
+        return list;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CustomUser> findByEmailAndLogin(String searchEmail, String searchLogin, Pageable pageable) {
+
+        Page<CustomUser> users = userRepository.findByEmailAndLogin(searchEmail, searchLogin, pageable);
+
+        return  users;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CustomUser> findByEmail(String searchEmail,Pageable pageable) {
+        Page<CustomUser> users = userRepository.findByEmail(searchEmail, pageable);
+
+        return  users;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CustomUser> findByLogin(String searchLogin, Pageable pageable) {
+        Page<CustomUser> users = userRepository.findByLogin(searchLogin, pageable);
+
+        return  users;
+    }
 
     @Override
     @Transactional(readOnly = true)

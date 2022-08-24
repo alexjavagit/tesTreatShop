@@ -69,6 +69,8 @@
                     <i class="fa fa-angle-up"></i>
                     </a></h5>
                 <ul class="nav-drop-menu">
+                    <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=id&order=asc';"><a href="">Id (low to high)</a>
+                    </li>
                     <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=price&order=desc';"><a href="">Price (high to low)</a>
                     </li>
                     <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=price&order=asc';"><a href="#">Price (low to high)</a>

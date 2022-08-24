@@ -3,15 +3,21 @@
 
 <div class="container">
 
-    <h3 class="booking-title">Categories</h3>
+    <h3 class="booking-title">Users</h3>
     <form class="booking-item-dates-change mb30">
         <input type="hidden" name="sortBy" value=""/>
         <input type="hidden" name="order" value=""/>
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                    <label>Name</label>
-                    <input class="typeahead form-control" name="searchName" value="${param.searchName}" placeholder="" type="text" />
+                    <label>E-Mail</label>
+                    <input class="typeahead form-control" name="searchEmail" value="${param.searchEmail}" placeholder="" type="text" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                    <label>Login</label>
+                    <input class="typeahead form-control" name="searchLogin" value="${param.searchLogin}" placeholder="" type="text" />
                 </div>
             </div>
             <div class="col-md-2">
@@ -26,7 +32,7 @@
                     <div class="btn-group btn-group-select-num" data-toggle="buttons">
                         <c:forEach begin="${startpage}" end="${endpage}" var="p">
                             <label class="btn btn-primary <c:if test="${currentPage == p}">active</c:if>"
-                                   onClick="window.location='/admin/categories?searchName=${param.searchName}&sortBy=${param.sortBy}&order=${param.order}&page=${p}';">
+                                   onClick="window.location='/admin/users?searchLogin=${param.searchLogin}&searchName=${param.searchName}&sortBy=${param.sortBy}&order=${param.order}&page=${p}';">
                                 <input type="radio" name="options"  />${p}</label>
                         </c:forEach>
                     </div>
@@ -41,8 +47,11 @@
                         <a href="#">
                             Sort:
                             <c:choose>
-                                <c:when test="${param.sortBy=='name' && param.order=='asc'}">
-                                    Name
+                                <c:when test="${param.sortBy=='firstName' && param.order=='asc'}">
+                                    First Name
+                                </c:when>
+                                <c:when test="${param.sortBy=='login' && param.order=='asc'}">
+                                    Login
                                 </c:when>
                                 <c:otherwise>
                                     Id (low to high)
@@ -52,38 +61,48 @@
                             <i class="fa fa-angle-up"></i>
                         </a></h5>
                     <ul class="nav-drop-menu">
-                        <li onClick="window.location='/admin/categories?searchName=${param.searchName}&sortBy=id&order=asc';"><a href="#">Id (low to high)</a>
+                        <li onClick="window.location='/admin/users?searchEmail=${param.searchEmail}&searchLogin=${param.searchLogin}&sortBy=id&order=asc';"><a href="">Id (low to high)</a>
                         </li>
-                        <li onClick="window.location='/admin/categories?searchName=${param.searchName}&sortBy=name&order=asc';"><a href="#">Name</a>
+                        <li onClick="window.location='/admin/users?searchEmail=${param.searchEmail}&searchLogin=${param.searchLogin}&sortBy=firstName&order=desc';"><a href="">Name</a>
+                        </li>
+                        <li onClick="window.location='/admin/users?searchEmail=${param.searchEmail}&searchLogin=${param.searchLogin}&sortBy=login&order=asc';"><a href="#">Login</a>
                         </li>
                     </ul>
                 </div>
                 <ul class="booking-list">
-                    <c:if test="${empty categories}">
-                        We have not found any category yet. Please try again.
+                    <c:if test="${empty users}">
+                        We have not found any user yet. Please try again.
                     </c:if>
 
-                    <c:forEach items="${categories}" var="category">
+                    <c:forEach items="${users}" var="user">
                         <li>
                             <div class="booking-item-container">
                                 <div class="booking-item">
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="booking-item-airline-logo">
-                                                ${category.id}
+                                                <p class="booking-item-date" style="font-size: 14px;!important">${user.firstName} ${user.lastName}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="booking-item-flight-details">
                                                 <div class="booking-item-arrival">
-                                                    <p class="booking-item-date" style="font-size: 14px;!important">${category.name}</p>
+                                                    <p class="booking-item-date" style="font-size: 14px;!important">${user.email}</p>
+                                                </div>
+                                                <div class="booking-item-departure">
+                                                    <p class="booking-item-date" style="font-size: 14px;!important">${user.login}</p>
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--<div class="col-md-2">
+                                            <p><b>Sizes:</b> <c:forEach items="${product.categorySizes}" var="size">${size.size} </c:forEach></p>
+                                        </div>
+                                        <div class="col-md-2"><span class="booking-item-price" style="font-size: 24px;!important">$${product.price}</span>
+                                        </div>-->
                                         <div class="col-md-2">
-                                            <a class="btn btn-primary" href="/admin/categories/edit/${category.id}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a class="btn btn-primary" href="/admin/users/edit/${user.id}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
                                             <a class="btn btn-primary" href="#"
-                                               onClick="javascript: if (confirm('Are you sure you want to delete this category?')) window.location='/admin/categories/delete/${category.id}';">Delete</a>
+                                               onClick="javascript: if (confirm('Are you sure you want to delete this user?')) window.location='/admin/users/delete/${user.id}';">Delete</a>
                                         </div>
                                     </div>
                                 </div>
