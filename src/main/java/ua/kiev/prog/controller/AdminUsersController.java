@@ -5,24 +5,26 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import ua.kiev.prog.entity.Category;
+import org.springframework.web.bind.annotation.*;
 import ua.kiev.prog.entity.CustomUser;
+import ua.kiev.prog.entity.UserRole;
 import ua.kiev.prog.exception.ProductNotFoundException;
 import ua.kiev.prog.service.UserService;
 
-import java.util.List;
+import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
+
 
 @Controller
 @RequestMapping("/admin")
 public class AdminUsersController {
     @Autowired
     private UserService userService;
+    @Autowired
+    PasswordEncoder encoder;
 
 
     @GetMapping("/users")
@@ -68,7 +70,90 @@ public class AdminUsersController {
     @GetMapping("/users/delete/{id}")
     //@PreAuthorize("hasRole('ADMIN')")
     public String deleteUser(Model model, @PathVariable Long id) throws ProductNotFoundException {
-        //userService.deleteUser(id);
+        CustomUser customUser = userService.getById(id);
+        if (customUser != null) {
+            userService.deleteById(id);
+        }
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/users/new")
+    public String newUser(Model model) {
+        model.addAttribute("action", "/admin/users/new");
+        return "user_edit";
+    }
+
+    @GetMapping("/users/update/{id}")
+    public String updateUser(Model model, @PathVariable Long id) throws ParseException {
+        CustomUser customUser = userService.getById(id);
+        if (customUser == null) {
+            return "redirect:/admin/users";
+        }
+        model.addAttribute("action", "/admin/users/update");
+        model.addAttribute("theUser", customUser);
+
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM yyyy");
+        String dateAdded = customUser.getDateAdded().format(format);
+        model.addAttribute("dateAdded", dateAdded);
+
+        return "user_edit";
+    }
+
+    @PostMapping("/users/new")
+    public String saveUser(Model model,
+                           @ModelAttribute("theUser") CustomUser theUser
+                           ) {
+        System.out.println(theUser);
+        int error = 0;
+        CustomUser userExists = userService.findByEmail(theUser.getEmail());
+        if (userExists != null) {
+            model.addAttribute("errorMessage", "Oops!  There is already a user registered with the email provided.");
+            error = 1;
+        }
+        userExists = userService.findByLogin(theUser.getLogin());
+        if (userExists != null) {
+            model.addAttribute("errorMessage", "Oops!  There is already a user registered with the login provided.");
+            error = 1;
+        }
+        if (error == 1) {
+            model.addAttribute("theUser", theUser);
+            return "user_edit";
+        }
+        theUser.setRole(UserRole.USER);
+        theUser.setPassword(encoder.encode(theUser.getPassword()));
+        userService.addUser(theUser);
+
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/users/update")
+    public String updateUser(Model model,
+                             @ModelAttribute("theUser") CustomUser theUser) {
+
+        int error = 0;
+        CustomUser userExists = userService.findByEmailAndNotId(theUser.getEmail(), theUser.getId());
+        if (userExists != null) {
+            model.addAttribute("errorMessage", "Oops!  There is already a user registered with the email provided.");
+            error = 1;
+        }
+        userExists = userService.findByLoginAndNotId(theUser.getLogin(), theUser.getId());
+        if (userExists != null) {
+            model.addAttribute("errorMessage", "Oops!  There is already a user registered with the login provided.");
+            error = 1;
+        }
+        if (error == 1) {
+            model.addAttribute("theUser", theUser);
+            model.addAttribute("action", "/admin/users/update");
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM yyyy");
+            String dateAdded = userExists.getDateAdded().format(format);
+            model.addAttribute("dateAdded", dateAdded);
+            return "user_edit";
+        }
+
+        //CustomUser customUser = new CustomUser(login, encoder.encode(passwd), firstName, lastName, UserRole.USER, email, phone, address);
+        userService.updateUser(theUser);
+
         return "redirect:/admin/users";
     }
 }

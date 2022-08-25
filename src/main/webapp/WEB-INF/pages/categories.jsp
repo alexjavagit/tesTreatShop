@@ -58,6 +58,7 @@
                         </li>
                     </ul>
                 </div>
+                <a class="btn btn-primary" href="/admin/categories/new">Add new</a>
                 <ul class="booking-list">
                     <c:if test="${empty categories}">
                         We have not found any category yet. Please try again.
@@ -81,7 +82,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-2">
-                                            <a class="btn btn-primary" href="/admin/categories/edit/${category.id}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a class="btn btn-primary" href="/admin/categories/update/${category.id}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
                                             <a class="btn btn-primary" href="#"
                                                onClick="javascript: if (confirm('Are you sure you want to delete this category?')) window.location='/admin/categories/delete/${category.id}';">Delete</a>
                                         </div>

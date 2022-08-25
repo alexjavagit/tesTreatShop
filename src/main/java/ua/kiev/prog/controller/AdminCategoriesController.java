@@ -7,11 +7,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ua.kiev.prog.entity.Category;
+import ua.kiev.prog.entity.CustomUser;
+import ua.kiev.prog.entity.UserRole;
+import ua.kiev.prog.exception.CategoryNotFoundException;
+import ua.kiev.prog.exception.ProductNotFoundException;
 import ua.kiev.prog.service.CategoryService;
+
+import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/admin")
@@ -50,6 +55,85 @@ public class AdminCategoriesController {
         model.addAttribute("currentPage", categoryList.getNumber()+1);
 
         return "categories";
+    }
+
+    @GetMapping("/categories/delete/{id}")
+    //@PreAuthorize("hasRole('ADMIN')")
+    public String deleteCategory(Model model, @PathVariable Long id) throws CategoryNotFoundException {
+        Category category = categoryService.getById(id);
+        if (category != null) {
+            categoryService.deleteById(id);
+        }
+        return "redirect:/admin/categories";
+    }
+
+    @GetMapping("/categories/new")
+    public String newCategory(Model model) {
+        model.addAttribute("action", "/admin/categories/new");
+        return "category_edit";
+    }
+
+    @GetMapping("/categories/update/{id}")
+    public String updateCategory(Model model, @PathVariable Long id) throws ParseException {
+        Category category = categoryService.getById(id);
+        if (category == null) {
+            return "redirect:/admin/categories";
+        }
+        model.addAttribute("action", "/admin/categories/update");
+        model.addAttribute("theCategory", category);
+
+        return "category_edit";
+    }
+
+    @PostMapping("/categories/new")
+    public String saveCategory(Model model,
+                           @ModelAttribute("theCategory") Category theCategory
+    ) {
+        int error = 0;
+        Category categoryExists = categoryService.findByName(theCategory.getName());
+        if (categoryExists != null) {
+            model.addAttribute("errorMessage", "Oops!  There is already a category registered with the name provided.");
+            error = 1;
+        }
+        categoryExists = categoryService.findByShortName(theCategory.getShortName());
+        if (categoryExists != null) {
+            model.addAttribute("errorMessage", "Oops!  There is already a category registered with the short name provided.");
+            error = 1;
+        }
+        if (error == 1) {
+            model.addAttribute("theCategory", theCategory);
+            return "category_edit";
+        }
+
+        categoryService.addCategory(theCategory);
+
+        return "redirect:/admin/categories";
+    }
+
+    @PostMapping("/categories/update")
+    public String updateCategory(Model model,
+                             @ModelAttribute("theCategory") Category theCategory) {
+
+        int error = 0;
+        Category categoryExists = categoryService.findByNameAndNotId(theCategory.getName(), theCategory.getId());
+        if (categoryExists != null) {
+            model.addAttribute("errorMessage", "Oops!  There is already a category registered with the name provided.");
+            error = 1;
+        }
+        categoryExists = categoryService.findByShortNameAndNotId(theCategory.getShortName(), theCategory.getId());
+        if (categoryExists != null) {
+            model.addAttribute("errorMessage", "Oops!  There is already a category registered with the short name provided.");
+            error = 1;
+        }
+        if (error == 1) {
+            model.addAttribute("theCategory", theCategory);
+            model.addAttribute("action", "/admin/categories/update");
+            return "category_edit";
+        }
+
+        categoryService.updateCategory(theCategory);
+
+        return "redirect:/admin/categories";
     }
 
 }

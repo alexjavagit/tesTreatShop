@@ -12,7 +12,15 @@ public interface UserRepository extends JpaRepository<CustomUser, Long> {
     @Query("SELECT u FROM CustomUser u WHERE u.login=:login")
     CustomUser findByLogin(@Param("login") String login);
 
-    boolean existsByLogin(@Param("login") String login);
+    @Query("SELECT u FROM CustomUser u WHERE u.login=:login and u.id <> :id")
+    CustomUser findByLoginAndNotId(@Param("login") String login, @Param("id") Long id);
+
+    CustomUser findByEmail(@Param("email") String email);
+
+    @Query("SELECT u FROM CustomUser u WHERE u.email=:email and u.id <> :id")
+    CustomUser findByEmailAndNotId(@Param("email") String email, @Param("id") Long id);
+
+    CustomUser findUserById(@Param("id") Long id);
 
     Page<CustomUser> findAllBy(Pageable pageable);
 

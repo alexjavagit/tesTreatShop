@@ -82,4 +82,9 @@ public class AdminProductsController {
         return "redirect:/admin/products";
     }
 
+    @GetMapping("/products/new")
+    public String newUser(Model model) {
+        model.addAttribute("action", "/admin/products/new");
+        return "product_edit";
+    }
 }

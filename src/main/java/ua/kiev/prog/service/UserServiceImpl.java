@@ -6,8 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.prog.entity.CustomUser;
-import ua.kiev.prog.entity.Product;
-import ua.kiev.prog.entity.UserRole;
 import ua.kiev.prog.repository.UserRepository;
 import java.util.List;
 
@@ -24,6 +22,26 @@ public class UserServiceImpl  implements UserService {
     @Transactional(readOnly = true)
     public CustomUser findByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    @Transactional(readOnly = true)
+    public CustomUser findByLoginAndNotId(String login, Long id) {
+        return userRepository.findByLoginAndNotId(login, id);
+    }
+
+    @Transactional(readOnly = true)
+    public CustomUser findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Transactional(readOnly = true)
+    public CustomUser findByEmailAndNotId(String email, Long id) {
+        return userRepository.findByEmailAndNotId(email, id);
+    }
+
+    @Transactional(readOnly = true)
+    public CustomUser getById(Long id) {
+        return userRepository.findUserById(id);
     }
 
     @Transactional(readOnly = true)
@@ -56,8 +74,8 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public boolean existsByLogin(String login) {
-        return userRepository.existsByLogin(login);
+    public CustomUser existsByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 
     @Override
@@ -70,6 +88,12 @@ public class UserServiceImpl  implements UserService {
     @Transactional
     public void updateUser(CustomUser customUser) {
         userRepository.save(customUser);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
 //    @Transactional

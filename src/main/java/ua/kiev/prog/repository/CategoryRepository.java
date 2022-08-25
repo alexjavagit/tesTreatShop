@@ -7,15 +7,20 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ua.kiev.prog.entity.Category;
+import ua.kiev.prog.entity.CustomUser;
 
 import java.util.List;
 
 
 public interface CategoryRepository extends JpaRepository<Category, Long>, JpaSpecificationExecutor {
     Category findByName(@Param("name") String name);
+    @Query("SELECT c FROM Category c WHERE c.name=:name AND c.id<>:id")
+    Category findByNameAndNotId(@Param("name") String name, @Param("id") Long id);
 
     @Query("SELECT c FROM Category c WHERE c.shortName=:name")
     Category findByShortName(@Param("name") String name);
+    @Query("SELECT c FROM Category c WHERE c.shortName=:name AND c.id<>:id")
+    Category findByShortNameAndNotId(@Param("name") String name, @Param("id") Long id);
 
     boolean existsByName(@Param("name") String name);
 
@@ -27,4 +32,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long>, JpaSp
     List<Category> findAll();
 
     Page<Category> findAll(Pageable pageable);
+
+    Category findCategoryById(@Param("id") Long id);
 }

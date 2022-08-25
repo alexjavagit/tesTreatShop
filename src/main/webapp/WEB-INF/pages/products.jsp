@@ -79,6 +79,7 @@
                     </li>
                 </ul>
             </div>
+            <a class="btn btn-primary" href="/admin/products/new">Add new</a>&nbsp;
             <ul class="booking-list">
                 <c:if test="${empty products}">
                     We have not found any product yet. Please try again.

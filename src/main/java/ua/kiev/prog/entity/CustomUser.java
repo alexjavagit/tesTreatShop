@@ -4,8 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -34,6 +36,10 @@ public class CustomUser {
     private String email;
     private String phone;
     private String address;
+
+    @CreationTimestamp
+    @Column(name = "date_added")
+    private LocalDateTime dateAdded;
 
     @OneToOne(mappedBy = "customUser", cascade = CascadeType.REMOVE)
     private ShoppingCart shoppingCart;

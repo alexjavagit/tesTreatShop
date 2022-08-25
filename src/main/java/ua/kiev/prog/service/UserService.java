@@ -8,9 +8,17 @@ import ua.kiev.prog.entity.Product;
 public interface UserService {
 
     CustomUser findByLogin(String login);
-    boolean existsByLogin(String login);
+    CustomUser findByLoginAndNotId(String login, Long id);
+
+    CustomUser findByEmail(String email);
+    CustomUser findByEmailAndNotId(String email, Long id);
+
+    CustomUser getById(Long id);
+
+    CustomUser existsByLogin(String login);
     void addUser(CustomUser customUser);
     void updateUser(CustomUser customUser);
+    void deleteById(Long id);
 
     Page<CustomUser> getAllUsers(Pageable pageable);
 

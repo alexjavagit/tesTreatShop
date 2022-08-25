@@ -63,12 +63,13 @@
                     <ul class="nav-drop-menu">
                         <li onClick="window.location='/admin/users?searchEmail=${param.searchEmail}&searchLogin=${param.searchLogin}&sortBy=id&order=asc';"><a href="">Id (low to high)</a>
                         </li>
-                        <li onClick="window.location='/admin/users?searchEmail=${param.searchEmail}&searchLogin=${param.searchLogin}&sortBy=firstName&order=desc';"><a href="">Name</a>
+                        <li onClick="window.location='/admin/users?searchEmail=${param.searchEmail}&searchLogin=${param.searchLogin}&sortBy=firstName&order=asc';"><a href="">Name</a>
                         </li>
                         <li onClick="window.location='/admin/users?searchEmail=${param.searchEmail}&searchLogin=${param.searchLogin}&sortBy=login&order=asc';"><a href="#">Login</a>
                         </li>
                     </ul>
                 </div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="/admin/users/new">Add new</a>&nbsp;
                 <ul class="booking-list">
                     <c:if test="${empty users}">
                         We have not found any user yet. Please try again.
@@ -79,12 +80,12 @@
                             <div class="booking-item-container">
                                 <div class="booking-item">
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                             <div class="booking-item-airline-logo">
                                                 <p class="booking-item-date" style="font-size: 14px;!important">${user.firstName} ${user.lastName}</p>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="booking-item-flight-details">
                                                 <div class="booking-item-arrival">
                                                     <p class="booking-item-date" style="font-size: 14px;!important">${user.email}</p>
@@ -94,15 +95,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--<div class="col-md-2">
-                                            <p><b>Sizes:</b> <c:forEach items="${product.categorySizes}" var="size">${size.size} </c:forEach></p>
-                                        </div>
-                                        <div class="col-md-2"><span class="booking-item-price" style="font-size: 24px;!important">$${product.price}</span>
-                                        </div>-->
                                         <div class="col-md-2">
-                                            <a class="btn btn-primary" href="/admin/users/edit/${user.id}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a class="btn btn-primary" href="/admin/users/update/${user.id}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <c:if test="${user.id != 1}">
                                             <a class="btn btn-primary" href="#"
                                                onClick="javascript: if (confirm('Are you sure you want to delete this user?')) window.location='/admin/users/delete/${user.id}';">Delete</a>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
