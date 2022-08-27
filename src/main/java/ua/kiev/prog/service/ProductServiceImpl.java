@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.prog.entity.Category;
+import ua.kiev.prog.entity.CustomUser;
 import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.exception.ProductNotFoundException;
 import ua.kiev.prog.repository.ProductRepository;
@@ -83,6 +84,16 @@ public class ProductServiceImpl implements ProductService {
     @Transactional(readOnly = true)
     public Product findByName(String name) {
         return productRepository.findByName(name);
+    }
+
+    @Transactional(readOnly = true)
+    public Product findByNameAndNotId(String name, Long id) {
+        return productRepository.findByNameAndNotId(name, id);
+    }
+
+    @Override
+    public Product getById(Long id) {
+        return productRepository.getById(id);
     }
 
     @Transactional(readOnly = true)

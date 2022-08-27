@@ -111,7 +111,7 @@
                                     <div class="col-md-2"><span class="booking-item-price" style="font-size: 24px;!important">$${product.price}</span>
                                     </div>
                                     <div class="col-md-2">
-                                        <a class="btn btn-primary" href="/admin/products/edit/${product.id}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-primary" href="/admin/products/update/${product.id}">Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a class="btn btn-primary" href="#"
                                            onClick="javascript: if (confirm('Are you sure you want to delete this product?')) window.location='/admin/products/delete/${product.id}';">Delete</a>
                                     </div>

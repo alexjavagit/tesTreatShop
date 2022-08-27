@@ -7,16 +7,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.kiev.prog.entity.Category;
+import ua.kiev.prog.entity.CustomUser;
+import ua.kiev.prog.entity.POJO.ProductData;
 import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.exception.ProductNotFoundException;
 import ua.kiev.prog.service.CategoryService;
 import ua.kiev.prog.service.ProductService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -83,8 +87,55 @@ public class AdminProductsController {
     }
 
     @GetMapping("/products/new")
-    public String newUser(Model model) {
+    public String newProduct(Model model) {
         model.addAttribute("action", "/admin/products/new");
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+
         return "product_edit";
     }
+
+    @GetMapping("/products/update/{id}")
+    public String updateFormProduct(Model model, @PathVariable Long id) throws ParseException {
+        Product product = productService.getById(id);
+        if (product == null) {
+            return "redirect:/admin/products";
+        }
+        model.addAttribute("action", "/admin/products/update");
+        model.addAttribute("theProduct", product);
+
+        List<Category> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
+
+        return "product_edit";
+    }
+
+    @PostMapping("/products/update")
+    @ResponseBody
+    public String updateProduct(@RequestBody ProductData productData) {
+
+        String ret = productData.getId() +" -- "+productData.getName()+" -- "+productData.getPrice() + " -- "+
+                productData.getCategory() + " -- " + productData.getDiscount() + " -- " + productData.getDescription();
+        System.out.println(ret);
+        List<MultipartFile> files = productData.getUpload();
+        System.out.println(files);
+        return ret;
+//        int error = 0;
+//        Product productExists = productService.findByNameAndNotId(theProduct.getName(), theProduct.getId());
+//        if (productExists != null) {
+//            model.addAttribute("errorMessage", "Oops!  There is already a product registered with the name provided.");
+//            error = 1;
+//        }
+//        if (error == 1) {
+//        }
+//        String name = request.getParameter("name");
+//        String price = request.getParameter("price");
+//
+//        System.out.println("HERE = " + name + " -- price = "+price);
+//        return "I AM HERE = " + name+ " -- price = "+price;
+        //productService.updateProduct(theProduct);
+
+        //return "redirect:/admin/products";
+    }
+
 }
