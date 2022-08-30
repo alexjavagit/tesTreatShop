@@ -30,4 +30,6 @@ public class OrderItems {
     private BigDecimal qty;
     private BigDecimal price;
 
+    private String size;
+
 }

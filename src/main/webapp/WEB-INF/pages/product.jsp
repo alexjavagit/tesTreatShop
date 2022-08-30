@@ -39,7 +39,7 @@
                     <h5 class="lh1em"> ${product.description}</h5>
 
                     <div class="gap"></div>
-
+                    <p id="message" style="display: none; color: red;">Please choose size to add product to shopping cart!</p>
                     <p><div class="btn-group btn-group-select-num" data-toggle="buttons">
                         <c:forEach items="${sizes}" var="size">
                         <label class="btn btn-primary">
@@ -49,7 +49,7 @@
 
 
                     <div class="gap"></div>
-                    <a href="#" class="btn btn-primary">Add to cart</a>
+                    <a href="#" class="btn btn-primary" onClick="javascript: add_to_cart()">Add to cart</a>
 
                     </div>
                 </div>
@@ -61,4 +61,36 @@
     </div>
     <div class="gap gap-small"></div>
 </div>
+
+<script>
+    function add_to_cart() {
+        var size = $('input[name="size"]:checked').val();
+        var product_id = '${product.id}';
+        if (!size) {
+            $("#message").text("Please choose size to add product to shopping cart!");
+            $("#message").show();
+        } else {
+            var formData = {}
+            formData['id'] = product_id;
+            formData['size'] = size;
+            $.ajax({
+                url:'/admin/shoppingCart/addProduct',
+                contentType: "application/json; charset=utf-8",
+                data : JSON.stringify(formData),
+                dataType : 'json',
+                type: "POST",
+                success: function (data) {
+                    console.log(data);
+                    if (data.message = 'OK') {
+                        window.location = '/admin/shoppingCart';
+                    } else {
+                        $("#message").text(data.message);
+                        $("#message").show();
+                    }
+                }
+            });
+
+        }
+    }
+</script>
 <jsp:include page="footer.jsp"  flush="true"></jsp:include>

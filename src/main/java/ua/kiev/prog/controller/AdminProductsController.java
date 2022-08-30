@@ -5,22 +5,35 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.kiev.prog.entity.Category;
 import ua.kiev.prog.entity.CustomUser;
+import ua.kiev.prog.entity.POJO.DeleteProductModel;
 import ua.kiev.prog.entity.POJO.ProductData;
+import ua.kiev.prog.entity.POJO.UploadModel;
 import ua.kiev.prog.entity.Product;
+import ua.kiev.prog.entity.ProductImages;
 import ua.kiev.prog.exception.ProductNotFoundException;
+import ua.kiev.prog.repository.ProductRepository;
 import ua.kiev.prog.service.CategoryService;
+import ua.kiev.prog.service.ProductImagesService;
 import ua.kiev.prog.service.ProductService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,6 +43,8 @@ public class AdminProductsController {
     private ProductService productService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProductImagesService productImagesService;
 
     @GetMapping("/products")
     //@PreAuthorize("hasRole('ADMIN')")
@@ -41,9 +56,10 @@ public class AdminProductsController {
                                @RequestParam(value = "page", required = false) String page,
                                @RequestParam(value = "size", required = false) String size
     ) {
+
         int ipage = (page == null) ? 0 : Integer.parseInt(page)-1;
         int isize = (size == null) ? 10 : Integer.parseInt(size);
-        Sort.Direction direction = (order == null) ? Sort.Direction.ASC : ((order.equals("desc")) ? Sort.Direction.DESC : Sort.Direction.ASC);
+        Sort.Direction direction = (order == null) ? Sort.Direction.DESC : ((order.equals("desc")) ? Sort.Direction.DESC : Sort.Direction.ASC);
         String sSortBy = (sortBy == null) ? "id" : ((sortBy.equals("price") || sortBy.equals("name")) ? sortBy :  "id");
         Pageable pagingSort = PageRequest.of(ipage, isize, direction, sSortBy);
 
@@ -87,7 +103,9 @@ public class AdminProductsController {
     }
 
     @GetMapping("/products/new")
+    //@PreAuthorize("hasRole('ADMIN')")
     public String newProduct(Model model) {
+
         model.addAttribute("action", "/admin/products/new");
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
@@ -96,7 +114,9 @@ public class AdminProductsController {
     }
 
     @GetMapping("/products/update/{id}")
+    //@PreAuthorize("hasRole('ADMIN')")
     public String updateFormProduct(Model model, @PathVariable Long id) throws ParseException {
+
         Product product = productService.getById(id);
         if (product == null) {
             return "redirect:/admin/products";
@@ -110,32 +130,59 @@ public class AdminProductsController {
         return "product_edit";
     }
 
-    @PostMapping("/products/update")
-    @ResponseBody
-    public String updateProduct(@RequestBody ProductData productData) {
+    @PostMapping("/products/updateData")
+    public ResponseEntity<?> updateProduct(@RequestBody ProductData productData) {
+        Category category = categoryService.getById(productData.getCategory());
+        Integer discount;
+        try {
+            discount = Integer.parseInt(productData.getDiscount());
+        } catch(NumberFormatException ex){
+            discount = 0;
+        }
 
-        String ret = productData.getId() +" -- "+productData.getName()+" -- "+productData.getPrice() + " -- "+
-                productData.getCategory() + " -- " + productData.getDiscount() + " -- " + productData.getDescription();
-        System.out.println(ret);
-        List<MultipartFile> files = productData.getUpload();
-        System.out.println(files);
-        return ret;
-//        int error = 0;
-//        Product productExists = productService.findByNameAndNotId(theProduct.getName(), theProduct.getId());
-//        if (productExists != null) {
-//            model.addAttribute("errorMessage", "Oops!  There is already a product registered with the name provided.");
-//            error = 1;
-//        }
-//        if (error == 1) {
-//        }
-//        String name = request.getParameter("name");
-//        String price = request.getParameter("price");
-//
-//        System.out.println("HERE = " + name + " -- price = "+price);
-//        return "I AM HERE = " + name+ " -- price = "+price;
-        //productService.updateProduct(theProduct);
+        String message;
+        if (productData.getId() != null) {
+            productService.updateProduct(productData.getId(), productData.getName(), category, productData.getDescription(), new BigDecimal(productData.getPrice()), discount);
+            message = "{\"message\" : \"Product Updated\"}";
+        } else {
+            Product product = productService.addProduct(productData.getName(), category, productData.getDescription(), new BigDecimal(productData.getPrice()), Integer.parseInt(productData.getDiscount()));
+            message = "{\"id\" : \""+product.getId()+"\"}";
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
 
-        //return "redirect:/admin/products";
+        return new ResponseEntity<String>(message, headers, HttpStatus.OK);
     }
 
+    @PostMapping("/products/updateFile")
+    public ResponseEntity<?> handleFileUpload(@ModelAttribute UploadModel model) {
+        Product product = productService.getById(Long.parseLong(model.getId()));
+        List<ProductImages> listProductImages = new ArrayList<>();
+
+        ProductImages productImages = new ProductImages(null, product, null);
+        productImagesService.saveUploadedImage(model.getFile(), productImages);
+        listProductImages.add(productImages);
+
+        product.setProductImages(listProductImages);
+
+        //return new ResponseEntity<String>(productImages.getId().toString(), HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        String message = "{\"id\" : \""+productImages.getId()+"\"}";
+        return new ResponseEntity<String>(message, headers, HttpStatus.OK);
+    }
+
+    @PostMapping("/products/deleteFile")
+    public ResponseEntity<?> deleteFileProduct(@RequestBody DeleteProductModel deleteProductModel) {
+        Long lid = Long.parseLong(deleteProductModel.getId());
+
+        productImagesService.deleteImage(lid);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        String message = "{\"message\" : \"Product image Deleted\"}";
+        return new ResponseEntity<String>(message, headers, HttpStatus.OK);
+
+        //return new ResponseEntity<String>("Product image Deleted", HttpStatus.OK);
+    }
 }

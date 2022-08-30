@@ -52,8 +52,6 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<OrderItems> orderItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ShoppingCartProducts> shoppingCartProducts = new ArrayList<>();
 
     public Product(String name, Category category, String description, BigDecimal price) {
         this.name = name;
@@ -61,6 +59,7 @@ public class Product {
         this.description = description;
         this.price = price;
     }
+
 
     public void addProductSizes(CategorySizes categorySize) {
         categorySizes.add(categorySize);

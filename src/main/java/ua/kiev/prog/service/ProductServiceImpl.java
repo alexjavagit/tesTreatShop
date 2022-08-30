@@ -100,14 +100,30 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findByDiscount() { return productRepository.findByDiscount();};
 
     @Transactional
-    public boolean addProduct(String name, Category category,
+    public Product addProduct(String name, Category category,
                               String description, BigDecimal price,
                               Integer discount) {
-        Product product = new Product((long) 0, name, category, description, price, discount, null, null, null, null);
+        Product product = new Product((long) 0, name, category, description, price, discount, null, null, null);
+        Product savedProduct = productRepository.save(product);
+
+        return savedProduct;
+    }
+
+    @Transactional
+    public boolean updateProduct(Long id, String name, Category category,
+                          String description, BigDecimal price,
+                          Integer discount) {
+        Product product = productRepository.getById(id);
+        product.setName(name);
+        product.setCategory(category);
+        product.setDescription(description);
+        product.setPrice(price);
+        product.setDiscount(discount);
         productRepository.save(product);
 
         return true;
     }
+
 
     public Product getProductDetails(Long id) {
         return productRepository.getProductDetails(id);

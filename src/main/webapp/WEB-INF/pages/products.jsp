@@ -62,14 +62,14 @@
                             Name
                         </c:when>
                         <c:otherwise>
-                            Id (low to high)
+                            Id (high to low)
                         </c:otherwise>
                     </c:choose>
                     <i class="fa fa-angle-down"></i>
                     <i class="fa fa-angle-up"></i>
                     </a></h5>
                 <ul class="nav-drop-menu">
-                    <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=id&order=asc';"><a href="">Id (low to high)</a>
+                    <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=id&order=desc';"><a href="">Id (high to low)</a>
                     </li>
                     <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=price&order=desc';"><a href="">Price (high to low)</a>
                     </li>

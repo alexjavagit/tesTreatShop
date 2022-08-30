@@ -1,17 +1,20 @@
 package ua.kiev.prog.controller;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ua.kiev.prog.entity.Category;
 import ua.kiev.prog.entity.CategorySizes;
+import ua.kiev.prog.entity.POJO.ProductToCart;
 import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.entity.ProductImages;
 import ua.kiev.prog.service.CategoryService;
 import ua.kiev.prog.service.ProductImagesService;
 import ua.kiev.prog.service.ProductService;
+import ua.kiev.prog.service.ShoppingCartService;
 
 import java.util.List;
 
@@ -21,11 +24,13 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryService categoryService;
     private final ProductImagesService productImagesService;
+    private final ShoppingCartService shoppingCartService;
 
-    public ProductController(ProductService productService, CategoryService categoryService, ProductImagesService productImagesService) {
+    public ProductController(ProductService productService, CategoryService categoryService, ProductImagesService productImagesService, ShoppingCartService shoppingCartService) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.productImagesService = productImagesService;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @GetMapping("/{id}")
@@ -48,4 +53,5 @@ public class ProductController {
             return "redirect: /catalog";
         }
     }
+
 }

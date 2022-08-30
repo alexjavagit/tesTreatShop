@@ -3,6 +3,7 @@ package ua.kiev.prog.entity.POJO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 public class ProductData {
     private Long id;
@@ -11,7 +12,6 @@ public class ProductData {
     private String price;
     private String discount;
     private String description;
-    private List<MultipartFile> upload;
 
     public Long getId() {
         return id;
@@ -61,11 +61,4 @@ public class ProductData {
         this.description = description;
     }
 
-    public List<MultipartFile> getUpload() {
-        return upload;
-    }
-
-    public void setUpload(List<MultipartFile> upload) {
-        this.upload = upload;
-    }
 }

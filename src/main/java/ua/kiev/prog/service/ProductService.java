@@ -39,9 +39,13 @@ public interface ProductService {
 
     Product getProductDetails(Long id);
 
-    boolean addProduct(String name, Category category,
+    Product addProduct(String name, Category category,
                               String description, BigDecimal price,
                               Integer discount);
+
+    boolean updateProduct(Long id, String name, Category category,
+                       String description, BigDecimal price,
+                       Integer discount);
 
     void deleteProduct(Long id) throws ProductNotFoundException;
 }

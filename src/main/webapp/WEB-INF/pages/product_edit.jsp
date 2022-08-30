@@ -4,13 +4,13 @@
 
 <div class="container">
     <h3 class="booking-title">Product Settings</h3>
-    <form id="myform" method="post" action="" modelAttribute="theProduct" enctype="multipart/form-data">
-        <div class="row">
 
+        <div class="row">
+            <p id="message"></p>
             <div class="col-md-9" style="width: 90%!important">
                 <div class="row">
                     <div class="col-md-5">
-
+                        <form id="formData" method="post" action="" modelAttribute="theProduct">
                         <input type="hidden" name="id" value="${theProduct.id}"/>
 
                         <p style="color: red">${errorMessage}</p>
@@ -45,11 +45,11 @@
                         <hr>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <br/><br/>
-
+                        </form>
                     </div>
-                    <div class="col-md-7">
-
-                        <div class="row row-no-gutter">
+                    <div id="formImagesDiv" class="col-md-7" >
+                        <form id="formImages" method="post" action="" enctype="multipart/form-data">
+                        <div id="divImagesButt" class="row row-no-gutter" <c:if test="${theProduct.id eq null}">style="display: none"</c:if>>
                         <c:forEach items="${theProduct.productImages}" var="image">
                             <div id="div${image.id}" class="col-md-4" style="padding: 4px!important">
                                 <div class="thumb">
@@ -57,12 +57,12 @@
                                         <img src="data:;base64,${image.image}" alt="${image.id}" style="width: 182px; height: 140px;" />
                                         <div class="hover-inner hover-inner-block hover-inner-bottom hover-inner-bg-black hover-inner-sm hover-hold">
                                             <div class="text-small">
-                                                <a href="#" onClick="javascript: $('#delete${image.id}').value='${image.id}'; $('#div${image.id}').hide();">Delete</a>
+                                                <a href="#" onClick="javascript: delete_pic('${image.id}');">Delete</a>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
-                                <input id="delete${image.id}" type="hidden" name="delete[]" value="${image.id}" />
+
                             </div>
                         </c:forEach>
 
@@ -70,8 +70,8 @@
                             <input id="fileInput" type="file" style="display:none;" accept="image/png, image/jpeg" />
                             <a href="#" onClick="javascript: document.getElementById('fileInput').click();" class="btn btn-primary mb20"><i class="fa fa-plus-circle"></i>Add new photo</a>
                         </div>
-                    </div>
-
+                        </div>
+                        </form>
                 </div>
 
             </div>
@@ -82,41 +82,59 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
-    $(function() {
-        $("#fileInput").change(function (){
-            var fileName = $(this).val();
-            console.log(fileName);
-
-            var fd = new FormData();
-            var file = $('#fileInput')[0].files[0];
-
-            html = "<div class=\"col-md-4\" style=\"padding: 4px!important\">"+
-                "<div class=\"thumb\">"+
-                "<a class=\"hover-img\" href=\"#\" >"+
-                "<img src=\""+URL.createObjectURL(file)+"\" style=\"width: 182px; height: 140px;\" />"+
-                "<div class=\"hover-inner hover-inner-block hover-inner-bottom hover-inner-bg-black hover-inner-sm hover-hold\">"+
-                "<div class=\"text-small\">"+
-                "<a href=\"#\" onClick=\"javascript: $(this).parent().find('input:hidden:first').value=''; $(this).parent().closest('.col-md-4').hide();\">Delete</a>"+
-                "</div>"+
-                "</div>"+
-                "</a>"+
-                "</div>"+
-                "<input class=\"newupl\" type=\"hidden\" name=\"upload[]\" value=\""+file+"\" />"+
-                "</div>";
-
-            $("div#btnAdd").before(html);
-
-
+    $(document).ready(function () {
+        $("#fileInput").change(function (event) {
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+            fire_ajax_submit();
         });
     });
 
+    function fire_ajax_submit() {
+        console.log('2');
 
-    $( "#myform" ).submit(function( event ) {
+        var file = $('#fileInput')[0].files[0];
+        console.log(file);
+        // var formData = {}
+        var form = $('#formImages')[0];
+        var data = new FormData(form);
+        console.log(data +'------' + $("input[name=id]").val());
+        data.append("id", $("input[name=id]").val());
+        data.append("file", file);
+        $.ajax({
+            url: "/admin/products/updateFile",
+            type: 'post',
+            data: data,
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                //$('#result').html(data);
+                html = "<div class=\"col-md-4\" style=\"padding: 4px!important\">" +
+                    "<div class=\"thumb\">" +
+                    "<a class=\"hover-img\" href=\"#\" >" +
+                    "<img src=\"" + URL.createObjectURL(file) + "\" style=\"width: 182px; height: 140px;\" />" +
+                    "<div class=\"hover-inner hover-inner-block hover-inner-bottom hover-inner-bg-black hover-inner-sm hover-hold\">" +
+                    "<div class=\"text-small\">" +
+                    "<a href=\"#\" onClick=\"javascript: delete_pic('"+data+"');\">Delete</a>" +
+                    "</div>" +
+                    "</div>" +
+                    "</a>" +
+                    "</div>" +
+                    "</div>";
+
+                $("div#btnAdd").before(html);
+            }
+        });
+
+    };
+
+
+    $( "#formData" ).submit(function( event ) {
         event.preventDefault();
         var formData = {};
-        // reference to form object
         var form = this;
-        // mapthat will hold form data
         var formData = {}
         formData['id'] = $("input[name=id]").val();
         formData['name'] = $("input[name=name]").val();
@@ -124,19 +142,42 @@
         formData['price'] = $("input[name=price]").val();
         formData['discount'] = $("input[name=discount]").val();
         formData['description'] = $("textarea[name=description]").val();
-        formData['upload[]'] = $("input:file .newupl").val();
-        console.log(formData);
         $.ajax({
-            url:'/admin/products/update',
+            url:'/admin/products/updateData',
             dataType : 'json',
             type: "post",
+            contentType: "application/json; charset=utf-8",
             data : JSON.stringify(formData),
             success: function (data) {
+                console.log('success');
                 console.log(data);
-                //$('#result').html(data);
+                if (formData['id'] == '') {
+                    $("#message").html("Product successfully added. Please add product images.");
+                    $("#divImagesButt").show();
+                    $("input[name=id]").val(data.id);
+                } else {
+                    window.location = "/admin/products";
+                }
             }
         });
     });
+
+    function delete_pic(pid) {
+        var formData = {}
+        formData['id'] = pid;
+        $('#div'+pid).hide();
+        $.ajax({
+            url:'/admin/products/deleteFile',
+            contentType: "application/json; charset=utf-8",
+            data : JSON.stringify(formData),
+            dataType : 'json',
+            type: "POST",
+            success: function (data) {
+                console.log(data);
+            }
+        });
+
+    }
 </script>
 
 <jsp:include page="footer.jsp"  flush="true"></jsp:include>

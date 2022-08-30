@@ -41,9 +41,6 @@ public class CustomUser {
     @Column(name = "date_added")
     private LocalDateTime dateAdded;
 
-    @OneToOne(mappedBy = "customUser", cascade = CascadeType.REMOVE)
-    private ShoppingCart shoppingCart;
-
     @OneToMany(mappedBy = "customUser", cascade = CascadeType.ALL)
     private List<Order> orderList;
 

@@ -72,7 +72,9 @@
                                     <a href="/register">Register</a>
                                 </li>
                                 </security:authorize>
-
+                                <li>
+                                    <a href="/shoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <c:if test="${cart.count > 0}">(${cart.count})</c:if></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
