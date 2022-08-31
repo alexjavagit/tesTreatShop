@@ -26,7 +26,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private final ProductRepository productRepository;
 
-    private Map<String, Integer> products = new HashMap<>();
+    private Map<Product, Integer> products = new HashMap<>();
 
     @Autowired
     public ShoppingCartServiceImpl(ProductRepository productRepository) {
@@ -40,12 +40,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      * @param product
      */
     @Override
-    public void addProduct(Product product, String size) {
-        String productAndSize = product.getId()+","+size;
-        if (products.containsKey(productAndSize)) {
-            products.replace(productAndSize, products.get(productAndSize) + 1);
+    public void addProduct(Product product, Integer qty) {
+
+        if (products.containsKey(product)) {
+            products.replace(product, products.get(product) + 1);
         } else {
-            products.put(productAndSize, 1);
+            products.put(product, 1);
         }
     }
 
@@ -56,13 +56,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      * @param product
      */
     @Override
-    public void removeProduct(Product product, String size) {
-        String productAndSize = product.getId()+","+size;
-        if (products.containsKey(productAndSize)) {
-            if (products.get(productAndSize) > 1)
-                products.replace(productAndSize, products.get(productAndSize) - 1);
-            else if (products.get(productAndSize) == 1) {
-                products.remove(productAndSize);
+    public void removeProduct(Product product) {
+        if (products.containsKey(product)) {
+            if (products.get(product) > 1)
+                products.replace(product, products.get(product) - 1);
+            else if (products.get(product) == 1) {
+                products.remove(product);
             }
         }
     }
@@ -71,7 +70,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      * @return unmodifiable copy of the map
      */
     @Override
-    public Map<String, Integer> getProductsInCart() {
+    public Map<Product, Integer> getProductsInCart() {
         return Collections.unmodifiableMap(products);
     }
 

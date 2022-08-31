@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.kiev.prog.entity.Category;
 import ua.kiev.prog.entity.Product;
-import ua.kiev.prog.entity.ProductImages;
 import ua.kiev.prog.service.CategoryService;
 import ua.kiev.prog.service.ProductImagesService;
 import ua.kiev.prog.service.ProductService;

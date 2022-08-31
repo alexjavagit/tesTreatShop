@@ -74,7 +74,7 @@
             formData['id'] = product_id;
             formData['size'] = size;
             $.ajax({
-                url:'/admin/shoppingCart/addProduct',
+                url:'/shoppingCart/addProduct',
                 contentType: "application/json; charset=utf-8",
                 data : JSON.stringify(formData),
                 dataType : 'json',
@@ -82,7 +82,7 @@
                 success: function (data) {
                     console.log(data);
                     if (data.message = 'OK') {
-                        window.location = '/admin/shoppingCart';
+                        window.location = '/shoppingCart';
                     } else {
                         $("#message").text(data.message);
                         $("#message").show();

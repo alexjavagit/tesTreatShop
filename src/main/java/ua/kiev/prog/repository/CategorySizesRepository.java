@@ -14,4 +14,6 @@ public interface CategorySizesRepository extends JpaRepository<CategorySizes, Lo
     //@Query("select p from ProductSizes p where p.size =:size and p.category=:category")
     boolean existsBySizeAndCategory(@Param("size") String size, @Param("category") Category category);
 
+    @Query("SELECT c FROM CategorySizes c WHERE c.category=:category")
+    public List<CategorySizes> getByCategory(Category category);
 }

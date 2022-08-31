@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.prog.entity.Category;
+import ua.kiev.prog.entity.CategorySizes;
 import ua.kiev.prog.entity.CustomUser;
 import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.exception.ProductNotFoundException;
@@ -103,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
     public Product addProduct(String name, Category category,
                               String description, BigDecimal price,
                               Integer discount) {
-        Product product = new Product((long) 0, name, category, description, price, discount, null, null, null);
+        Product product = new Product(name, category, description, price, discount);
         Product savedProduct = productRepository.save(product);
 
         return savedProduct;
@@ -139,4 +140,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException(id));
     }
+
+
 }

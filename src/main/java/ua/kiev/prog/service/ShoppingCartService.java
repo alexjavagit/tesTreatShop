@@ -7,11 +7,11 @@ import java.util.Map;
 
 public interface ShoppingCartService {
 
-    void addProduct(Product product, String size);
+    void addProduct(Product product, Integer qty);
 
-    void removeProduct(Product product, String size);
+    void removeProduct(Product product);
 
-    Map<String, Integer> getProductsInCart();
+    Map<Product, Integer> getProductsInCart();
 
     void checkout();
 

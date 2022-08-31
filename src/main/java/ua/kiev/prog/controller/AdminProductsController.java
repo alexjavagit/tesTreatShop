@@ -8,31 +8,24 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ua.kiev.prog.entity.Category;
-import ua.kiev.prog.entity.CustomUser;
+import ua.kiev.prog.entity.CategorySizes;
 import ua.kiev.prog.entity.POJO.DeleteProductModel;
 import ua.kiev.prog.entity.POJO.ProductData;
 import ua.kiev.prog.entity.POJO.UploadModel;
 import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.entity.ProductImages;
 import ua.kiev.prog.exception.ProductNotFoundException;
-import ua.kiev.prog.repository.ProductRepository;
 import ua.kiev.prog.service.CategoryService;
+import ua.kiev.prog.service.CategorySizesService;
 import ua.kiev.prog.service.ProductImagesService;
 import ua.kiev.prog.service.ProductService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +38,8 @@ public class AdminProductsController {
     private CategoryService categoryService;
     @Autowired
     private ProductImagesService productImagesService;
+    @Autowired
+    private CategorySizesService categorySizesService;
 
     @GetMapping("/products")
     //@PreAuthorize("hasRole('ADMIN')")
@@ -142,10 +137,29 @@ public class AdminProductsController {
 
         String message;
         if (productData.getId() != null) {
+            Category oldCategory = productService.getById(productData.getId()).getCategory();
+            Product product = productService.getById(productData.getId());
             productService.updateProduct(productData.getId(), productData.getName(), category, productData.getDescription(), new BigDecimal(productData.getPrice()), discount);
+            if (!oldCategory.equals(category)) {
+                // delete old
+                List<CategorySizes> oldCategorySizes = categorySizesService.getSizesForCategory(oldCategory);
+                for (CategorySizes catsSizes : oldCategorySizes) {
+                    product.removeProductSizes(catsSizes);
+                }
+                //add new
+                List<CategorySizes> categorySizes = categorySizesService.getSizesForCategory(category);
+                for (CategorySizes catsSizes : categorySizes) {
+                    product.addProductSizes(catsSizes);
+                }
+            }
             message = "{\"message\" : \"Product Updated\"}";
         } else {
             Product product = productService.addProduct(productData.getName(), category, productData.getDescription(), new BigDecimal(productData.getPrice()), Integer.parseInt(productData.getDiscount()));
+            List<CategorySizes> categorySizes = categorySizesService.getSizesForCategory(category);
+            //sizes
+            for (CategorySizes catsSizes : categorySizes) {
+                product.addProductSizes(catsSizes);
+            }
             message = "{\"id\" : \""+product.getId()+"\"}";
         }
         HttpHeaders headers = new HttpHeaders();

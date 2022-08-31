@@ -1,7 +1,6 @@
 package ua.kiev.prog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import ua.kiev.prog.entity.CustomUser;
 import ua.kiev.prog.entity.Product;
-import ua.kiev.prog.entity.UserRole;
 import ua.kiev.prog.service.ProductService;
+import ua.kiev.prog.service.ShoppingCartService;
 import ua.kiev.prog.service.UserService;
 
 import java.util.Collection;
@@ -29,7 +28,8 @@ public class MyController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ProductService productService;
-
+    @Autowired
+    ShoppingCartService shoppingCartService;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -92,6 +92,7 @@ public class MyController {
 
         return "userProfile";
     }
+
 
 //    @PostMapping(value = "/update")
 //    public String update(@RequestParam(required = false) String email,

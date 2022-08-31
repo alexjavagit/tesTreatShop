@@ -7,6 +7,8 @@ import ua.kiev.prog.entity.Category;
 import ua.kiev.prog.entity.CategorySizes;
 import ua.kiev.prog.repository.CategorySizesRepository;
 
+import java.util.List;
+
 @Service
 public class CategorySizesServiceImpl implements CategorySizesService {
     private final CategorySizesRepository categorySizesRepository;
@@ -24,6 +26,12 @@ public class CategorySizesServiceImpl implements CategorySizesService {
         CategorySizes categorySizes = new CategorySizes(category, size);
         categorySizesRepository.save(categorySizes);
 
+        return categorySizes;
+    }
+
+    @Transactional
+    public List<CategorySizes> getSizesForCategory(Category category) {
+        List<CategorySizes> categorySizes = categorySizesRepository.getByCategory(category);
         return categorySizes;
     }
 }

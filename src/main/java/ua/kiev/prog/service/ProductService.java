@@ -4,6 +4,7 @@ package ua.kiev.prog.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ua.kiev.prog.entity.Category;
+import ua.kiev.prog.entity.CategorySizes;
 import ua.kiev.prog.entity.CustomUser;
 import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.exception.ProductNotFoundException;
@@ -48,4 +49,5 @@ public interface ProductService {
                        Integer discount);
 
     void deleteProduct(Long id) throws ProductNotFoundException;
+
 }

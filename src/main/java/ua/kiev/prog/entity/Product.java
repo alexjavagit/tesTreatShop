@@ -46,12 +46,14 @@ public class Product {
     )
     private List<CategorySizes> categorySizes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductImages> productImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<OrderItems> orderItems = new ArrayList<>();
 
+    @Transient
+    private String selectedSize;
 
     public Product(String name, Category category, String description, BigDecimal price) {
         this.name = name;
@@ -60,6 +62,13 @@ public class Product {
         this.price = price;
     }
 
+    public Product(String name, Category category, String description, BigDecimal price, Integer discount) {
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.price = price;
+        this.discount = discount;
+    }
 
     public void addProductSizes(CategorySizes categorySize) {
         categorySizes.add(categorySize);

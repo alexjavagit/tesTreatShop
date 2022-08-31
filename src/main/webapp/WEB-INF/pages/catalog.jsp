@@ -32,7 +32,7 @@
                     </a>
                 </header>
                 <div class="thumb-caption">
-                    <h5 class="thumb-title"><a class="text-darken" href="#">${product.name}</a></h5>
+                    <h5 class="thumb-title"><a class="text-darken" href="/product/${product.id}">${product.name}</a></h5>
                     <p class="mb0"><small><i class="fa fa-map-marker"></i> ${product.category.name}</small>
                     </p>
                     <p class="mb0 text-darken"><span class="text-lg lh1em text-color">$${product.price}</span><small> </small>

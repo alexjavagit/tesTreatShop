@@ -72,9 +72,11 @@
                                     <a href="/register">Register</a>
                                 </li>
                                 </security:authorize>
+                                <security:authorize access="!hasAnyAuthority('ADMIN')">
                                 <li>
                                     <a href="/shoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <c:if test="${cart.count > 0}">(${cart.count})</c:if></a>
                                 </li>
+                                </security:authorize>
                             </ul>
                         </div>
                     </div>
