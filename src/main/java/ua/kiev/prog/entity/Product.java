@@ -53,7 +53,9 @@ public class Product {
     private List<OrderItems> orderItems = new ArrayList<>();
 
     @Transient
-    private String selectedSize;
+    private String cartSize;
+    @Transient
+    private Integer cartQty;
 
     public Product(String name, Category category, String description, BigDecimal price) {
         this.name = name;

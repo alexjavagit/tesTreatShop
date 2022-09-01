@@ -141,5 +141,9 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
+    public void save(Product product) {
+        productRepository.save(product);
+    }
+
 
 }

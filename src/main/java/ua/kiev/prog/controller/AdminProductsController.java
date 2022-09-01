@@ -152,6 +152,7 @@ public class AdminProductsController {
                     product.addProductSizes(catsSizes);
                 }
             }
+            productService.save(product);
             message = "{\"message\" : \"Product Updated\"}";
         } else {
             Product product = productService.addProduct(productData.getName(), category, productData.getDescription(), new BigDecimal(productData.getPrice()), Integer.parseInt(productData.getDiscount()));
@@ -160,6 +161,7 @@ public class AdminProductsController {
             for (CategorySizes catsSizes : categorySizes) {
                 product.addProductSizes(catsSizes);
             }
+            productService.save(product);
             message = "{\"id\" : \""+product.getId()+"\"}";
         }
         HttpHeaders headers = new HttpHeaders();

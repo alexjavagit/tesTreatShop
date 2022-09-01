@@ -26,51 +26,46 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private final ProductRepository productRepository;
 
-    private Map<Product, Integer> products = new HashMap<>();
+    private Map<String, Integer> products = new HashMap<>();
 
     @Autowired
     public ShoppingCartServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    /**
-     * If product is in the map just increment quantity by 1.
-     * If product is not in the map with, add it with quantity 1
-     *
-     * @param product
-     */
     @Override
-    public void addProduct(Product product, Integer qty) {
+    public Integer addProduct(Product product, String size, Integer qty) {
 
-        if (products.containsKey(product)) {
-            products.replace(product, products.get(product) + 1);
+        if (products.containsKey(product.getId()+"_"+size)) {
+            products.replace(product.getId()+"_"+size, products.get(product.getId()+"_"+size) + 1);
+            return products.get(product.getId()+"_"+size);
         } else {
-            products.put(product, 1);
+            products.put(product.getId()+"_"+size, 1);
+            return 1;
         }
     }
 
-    /**
-     * If product is in the map with quantity > 1, just decrement quantity by 1.
-     * If product is in the map with quantity 1, remove it from map
-     *
-     * @param product
-     */
+
     @Override
-    public void removeProduct(Product product) {
-        if (products.containsKey(product)) {
-            if (products.get(product) > 1)
-                products.replace(product, products.get(product) - 1);
-            else if (products.get(product) == 1) {
-                products.remove(product);
-            }
-        }
+    public Integer removeProduct(Product product, String size) {
+        if (products.containsKey(product.getId()+"_"+size)) {
+            if (products.get(product.getId()+"_"+size) > 1) {
+                products.replace(product.getId() + "_" + size, products.get(product.getId() + "_" + size) - 1);
+                return products.get(product.getId() + "_" + size);
+            } else if (products.get(product.getId()+"_"+size) == 1) {
+                products.remove(product.getId()+"_"+size);
+                return 0;
+            } else
+                return 0;
+        } else
+            return 0;
     }
 
     /**
      * @return unmodifiable copy of the map
      */
     @Override
-    public Map<Product, Integer> getProductsInCart() {
+    public Map<String, Integer> getProductsInCart() {
         return Collections.unmodifiableMap(products);
     }
 

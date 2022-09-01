@@ -50,4 +50,7 @@ public interface ProductService {
 
     void deleteProduct(Long id) throws ProductNotFoundException;
 
+    void save(Product product);
+
+
 }
