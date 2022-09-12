@@ -73,6 +73,7 @@
             var formData = {}
             formData['id'] = product_id;
             formData['size'] = size;
+            console.log("id="+product_id+"   size="+size);
             $.ajax({
                 url:'/shoppingCart/addProduct',
                 contentType: "application/json; charset=utf-8",

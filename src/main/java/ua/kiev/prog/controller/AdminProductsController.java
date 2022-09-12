@@ -58,6 +58,7 @@ public class AdminProductsController {
         String sSortBy = (sortBy == null) ? "id" : ((sortBy.equals("price") || sortBy.equals("name")) ? sortBy :  "id");
         Pageable pagingSort = PageRequest.of(ipage, isize, direction, sSortBy);
 
+
         Long icategory = 0L;
         if (searchCategory != null) {
             Category category = categoryService.getCategory(searchCategory.longValue());
@@ -79,6 +80,11 @@ public class AdminProductsController {
 
             productList = productService.getAllProducts(pagingSort);
         }
+        System.out.println("--1-");
+        System.out.println(productList);
+        System.out.println("--2-");
+        System.out.println(productList.getContent());
+        System.out.println("--3-");
 
         model.addAttribute("products", productList.getContent());
         model.addAttribute("endpage", productList.getTotalPages());
@@ -105,7 +111,7 @@ public class AdminProductsController {
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
 
-        return "product_edit";
+        return "productEdit";
     }
 
     @GetMapping("/products/update/{id}")
@@ -122,7 +128,7 @@ public class AdminProductsController {
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
 
-        return "product_edit";
+        return "productEdit";
     }
 
     @PostMapping("/products/updateData")

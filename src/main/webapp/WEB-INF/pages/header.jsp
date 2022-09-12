@@ -58,7 +58,7 @@
                             <ul class="top-customUser-area-list list list-horizontal list-border">
                                 <security:authorize access="isAuthenticated()">
                                     <li class="top-customUser-area-avatar">
-                                        <a href="/profile">
+                                        <a href="/user/profile">
                                             Hi, <security:authentication property="principal.username" /></a>
                                     </li>
                                     <li><a href="/logout">Sign Out</a>
@@ -69,12 +69,12 @@
                                     <a href="/login">Login</a>
                                 </li>
                                 <li>
-                                    <a href="/register">Register</a>
+                                    <a href="/user/register">Register</a>
                                 </li>
                                 </security:authorize>
                                 <security:authorize access="!hasAnyAuthority('ADMIN')">
                                 <li>
-                                    <a href="/shoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <c:if test="${cart.count > 0}">(${cart.count})</c:if></a>
+                                    <a href="/shoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <c:if test="${cartCount > 0}">(<span id="cartCount">${cartCount}</span>)</c:if></a>
                                 </li>
                                 </security:authorize>
                             </ul>

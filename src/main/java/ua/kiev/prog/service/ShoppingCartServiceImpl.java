@@ -1,5 +1,6 @@
 package ua.kiev.prog.service;
 
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -89,11 +90,31 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public BigDecimal getTotal() {
-//        return products.entrySet().stream()
-//                .map(entry -> entry.getKey().getPrice().multiply(BigDecimal.valueOf(entry.getValue())))
-//                .reduce(BigDecimal::add)
-//                .orElse(BigDecimal.ZERO);
-        return BigDecimal.ZERO;
+    public Integer getTotal() {
+        Integer total = 0;
+        for (var entry : products.entrySet()) {
+            String[] parts = entry.getKey().split("_");
+            Long productId = Long.parseLong(parts[0]);
+            Product eproduct = productRepository.getById(productId);
+            if (eproduct != null) {
+                total = total + eproduct.getPrice().intValue()*entry.getValue();
+            }
+        }
+        return total;
+    }
+
+    @Override
+    public Integer getCartCount() {
+        Integer count = 0;
+        for (var entry : products.entrySet()) {
+            count = count + entry.getValue();
+        }
+        return count;
+    }
+
+    @Override
+    public void clearCart() {
+        products.entrySet().clear();
+        products.clear();
     }
 }

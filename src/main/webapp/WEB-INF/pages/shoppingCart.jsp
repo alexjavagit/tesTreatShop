@@ -14,33 +14,33 @@
         <div class="col-md-9">
             <p id="message" style="display: none; color: red;">Error! Please contact administrator!</p>
             <ul class="booking-list">
-            <c:forEach items="${products}" var="product">
-                <li id="li_${product.id}_${product.cartSize}">
+            <c:forEach items="${products.entrySet()}" var="product">
+                <li id="li_${product.getKey()}">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="booking-item-img-wrap">
-                                    <a class="hover-img" href="/product/${product.id}">
-                                        <img src="data:;base64,${product.productImages[0].image}" alt="${product.name}" title="${product.name}" /></a>
+                                    <a class="hover-img" href="/product/${product.getValue().id}">
+                                        <img src="data:;base64,${product.getValue().productImages[0].image}" alt="${product.getValue().name}" title="${product.getValue().name}" /></a>
                                     <div class="booking-item-img-num"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h5 class="booking-item-title"><a class="hover-img" href="/product/${product.id}">${product.name}</a></h5>
-                                <p class="booking-item-address" style="font-size: 16px;!important;">Size: ${product.cartSize}</p>
-                                <p class="booking-item-address" style="font-size: 16px;!important;">Price: $${product.price}</p>
+                                <h5 class="booking-item-title"><a class="hover-img" href="/product/${product.getValue().id}">${product.getValue().name}</a></h5>
+                                <p class="booking-item-address" style="font-size: 16px;!important;">Size: ${productsSizes.get(product.getKey())}</p>
+                                <p class="booking-item-address" style="font-size: 16px;!important;">Price: $${product.getValue().price}</p>
                                 <p class="booking-item-address" style="font-size: 16px;!important;">Qty:
-                                    <a href="#" onClick="javascript: removeProductQtyFromCart(${product.id},'${product.cartSize}');" class="fa fa-minus-circle" style="font-size: 18px;!important;"></a> <span id="qty_${product.id}_${product.cartSize}">${product.cartQty}</span> <a href="#" onClick="javascript: addProductQtyToCart(${product.id},'${product.cartSize}')" class="fa fa-plus-circle" style="font-size: 18px;!important;"></a>
+                                    <a href="#" onClick="javascript: removeProductQtyFromCart(${product.getValue().id},'${productsSizes.get(product.getKey())}',${product.getValue().price});" class="fa fa-minus-circle" style="font-size: 18px;!important;"></a> <span id="qty_${product.getKey()}">${productsQty.get(product.getKey())}</span> <a href="#" onClick="javascript: addProductQtyToCart(${product.getValue().id},'${productsSizes.get(product.getKey())}',${product.getValue().price})" class="fa fa-plus-circle" style="font-size: 18px;!important;"></a>
                                 </p>
                             </div>
-                            <div class="booking-item-title">$${product.price}</div>
+                            <div class="booking-item-title" id="subtotal_${product.getKey()}">$${product.getValue().price*productsQty.get(product.getKey())}</div>
                         </div>
                 </li>
-                <c:set var = "total" value = "${total + product.price}"/>
+                <c:set var = "total" value = "${total + product.getValue().price*productsQty.get(product.getKey())}"/>
             </c:forEach>
                 <li id="totalli" <c:if test="${products.size() eq 0}">style="display: none"</c:if>>
                     <div class="row">
                         <div class="col-md-9"></div>
-                        <div class="booking-item-title" id="total"><b>Total: $${total}</b></div>
+                        <div class="booking-item-title"><b>Total: $<span id="total">${total}</span></b></div>
                     </div>
                 </li>
                 <li id="checkoutli" <c:if test="${products.size() eq 0}">style="display: none"</c:if>>
@@ -51,7 +51,7 @@
                 </li>
             </ul>
             <c:if test="${products.size() eq 0}">
-            <div class="row">
+            <div class="row" id="cart_empty">
                 <div class="col-md-6 text-center">
                     <p>Your shopping cart is empty.</p>
                 </div>
@@ -63,11 +63,7 @@
 </div>
 
 <script>
-    function removeProductQtyFromCart(pid) {
-
-    }
-
-    function addProductQtyToCart(pid, size) {
+    function addProductQtyToCart(pid, size, price) {
         var formData = {}
         formData['id'] = pid;
         formData['size'] = size;
@@ -86,11 +82,14 @@
                     $("#message").text(data.message);
                     $("#message").show();
                 }
+                $("#subtotal_"+pid+"_"+size).text("$" + (price*data.qty));
+                $("#total").text(data.total);
+                $("#cartCount").text(data.cartCount);
             }
         });
     }
 
-    function removeProductQtyFromCart(pid, size) {
+    function removeProductQtyFromCart(pid, size, price) {
         var formData = {}
         formData['id'] = pid;
         formData['size'] = size;
@@ -109,13 +108,18 @@
                         $('#qty_' + pid + "_" + size).text(data.qty);
                     }
                     $("#message").hide();
-
-                    //$("#totalli").hide();
-                    //$("#checkoutli").hide();
+                    if (!$('li[id^="li_"]').is(':visible')) {
+                        $("#totalli").hide();
+                        $("#checkoutli").hide();
+                        $("#cart_empty").show();
+                    }
                 } else {
                     $("#message").text(data.message);
                     $("#message").show();
                 }
+                $("#subtotal_"+pid+"_"+size).text("$" + (price*data.qty));
+                $("#total").text(data.total);
+                $("#cartCount").text(data.cartCount);
             }
         });
     }

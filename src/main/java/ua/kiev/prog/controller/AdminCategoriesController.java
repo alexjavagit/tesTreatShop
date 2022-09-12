@@ -9,14 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.kiev.prog.entity.Category;
-import ua.kiev.prog.entity.CustomUser;
-import ua.kiev.prog.entity.UserRole;
 import ua.kiev.prog.exception.CategoryNotFoundException;
-import ua.kiev.prog.exception.ProductNotFoundException;
 import ua.kiev.prog.service.CategoryService;
 
 import java.text.ParseException;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/admin")
@@ -70,7 +66,7 @@ public class AdminCategoriesController {
     @GetMapping("/categories/new")
     public String newCategory(Model model) {
         model.addAttribute("action", "/admin/categories/new");
-        return "category_edit";
+        return "categoryEdit";
     }
 
     @GetMapping("/categories/update/{id}")
@@ -82,7 +78,7 @@ public class AdminCategoriesController {
         model.addAttribute("action", "/admin/categories/update");
         model.addAttribute("theCategory", category);
 
-        return "category_edit";
+        return "categoryEdit";
     }
 
     @PostMapping("/categories/new")
@@ -102,7 +98,7 @@ public class AdminCategoriesController {
         }
         if (error == 1) {
             model.addAttribute("theCategory", theCategory);
-            return "category_edit";
+            return "categoryEdit";
         }
 
         categoryService.addCategory(theCategory);
@@ -128,7 +124,7 @@ public class AdminCategoriesController {
         if (error == 1) {
             model.addAttribute("theCategory", theCategory);
             model.addAttribute("action", "/admin/categories/update");
-            return "category_edit";
+            return "categoryEdit";
         }
 
         categoryService.updateCategory(theCategory);

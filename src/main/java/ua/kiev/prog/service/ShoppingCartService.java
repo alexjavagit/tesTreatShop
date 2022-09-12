@@ -15,5 +15,9 @@ public interface ShoppingCartService {
 
     void checkout();
 
-    BigDecimal getTotal();
+    Integer getTotal();
+
+    Integer getCartCount();
+
+    void clearCart();
 }

@@ -73,25 +73,6 @@ public class MyController {
         return "contact";
     }
 
-    @GetMapping("/user-profile")
-    public String userProfile(Model model){
-        //org.springframework.security.core.userdetails.User user = getCurrentUser();
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-
-        CustomUser dbCustomUser = userService.findByLogin(login);
-
-        model.addAttribute("login", login);
-        model.addAttribute("roles", user.getAuthorities());
-        model.addAttribute("admin", isAdmin(user));
-        model.addAttribute("firstName", dbCustomUser.getFirstName());
-        model.addAttribute("lastName", dbCustomUser.getLastName());
-        model.addAttribute("email", dbCustomUser.getEmail());
-        model.addAttribute("phone", dbCustomUser.getPhone());
-        model.addAttribute("address", dbCustomUser.getAddress());
-
-        return "userProfile";
-    }
 
 
 //    @PostMapping(value = "/update")
@@ -140,10 +121,10 @@ public class MyController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String register() {
-        return "register";
-    }
+//    @GetMapping("/register")
+//    public String register() {
+//        return "register";
+//    }
 
 //    @GetMapping("/admin")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")

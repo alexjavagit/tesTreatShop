@@ -2,13 +2,10 @@ package ua.kiev.prog.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.prog.entity.Category;
-import ua.kiev.prog.entity.CategorySizes;
-import ua.kiev.prog.entity.CustomUser;
 import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.exception.ProductNotFoundException;
 import ua.kiev.prog.repository.ProductRepository;

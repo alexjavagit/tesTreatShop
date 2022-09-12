@@ -1,78 +1,87 @@
 <jsp:include page="header.jsp"  flush="true"></jsp:include>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="container">
 
     <h3 class="booking-title">Orders</h3>
     <form class="booking-item-dates-change mb30">
+        <input type="hidden" name="sortBy" value=""/>
+        <input type="hidden" name="order" value=""/>
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                    <label>From</label>
-                    <input class="typeahead form-control" value="Great Britan, London" placeholder="City, Hotel Name or U.S. Zip Code" type="text" />
+                    <label>Order id</label>
+                    <input class="typeahead form-control" value="${param.searchId}" placeholder="" name="searchId" type="text" />
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
-                    <label>To</label>
-                    <input class="typeahead form-control" value="United States, New York" placeholder="City, Hotel Name or U.S. Zip Code" type="text" />
+                    <label>Customer Name</label>
+                    <input class="typeahead form-control" value="${param.searchFirstName}" placeholder="" name="searchFirstName" type="text" />
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group form-group-icon-left"><i class="fa fa-calendar input-icon input-icon-hightlight"></i>
-                    <label>Departing</label>
-                    <input class="date-pick form-control" data-date-format="MM d, D" type="text" />
+                    <label>Customer E-Mail</label>
+                    <input class="typeahead form-control" value="${param.searchEmail}" type="text" name="searchEmail" />
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group form-group-icon-left">
+                    <label><br/></label>
+                    <input type="submit" value="SEARCH" style="font-size: 14px; padding: 6px 12px;" />
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group form-group-select-plus">
-                    <label>Passengers</label>
+                    <label>Paging</label>
                     <div class="btn-group btn-group-select-num" data-toggle="buttons">
-                        <label class="btn btn-primary active">
-                            <input type="radio" name="options" />1</label>
-                        <label class="btn btn-primary">
-                            <input type="radio" name="options" />2</label>
-                        <label class="btn btn-primary">
-                            <input type="radio" name="options" />3</label>
-                        <label class="btn btn-primary">
-                            <input type="radio" name="options" />4</label>
-                        <label class="btn btn-primary">
-                            <input type="radio" name="options" />4+</label>
+                        <c:forEach begin="${startpage}" end="${endpage}" var="p">
+                            <label class="btn btn-primary <c:if test="${currentPage == p}">active</c:if>"
+                                   onClick="window.location='/admin/orders?searchId=${param.searchId}&searchName=${param.searchName}&searchEmail=${param.searchEmail}&sortBy=${param.sortBy}&order=${param.order}&page=${p}';">
+                                <input type="radio" name="options"  />${p}</label>
+                        </c:forEach>
                     </div>
-                    <select class="form-control hidden">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option selected="selected">5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                    </select>
                 </div>
             </div>
         </div>
     </form>
     <div class="row">
 
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="nav-drop booking-sort">
-                <h5 class="booking-sort-title"><a href="#">Sort: Sort: Price (low to high)<i class="fa fa-angle-down"></i><i class="fa fa-angle-up"></i></a></h5>
+                <h5 class="booking-sort-title"><a href="#">Sort: <c:choose>
+                    <c:when test="${param.sortBy=='id' && param.order=='asc'}">
+                        Id (low to high)
+                    </c:when>
+                    <c:when test="${param.sortBy=='name' && param.order=='asc'}">
+                        Name (low to high)
+                    </c:when>
+                    <c:when test="${param.sortBy=='name' && param.order=='desc'}">
+                        Name (high to low)
+                    </c:when>
+                    <c:when test="${param.sortBy=='total' && param.order=='asc'}">
+                        Total (low to high)
+                    </c:when>
+                    <c:when test="${param.sortBy=='total' && param.order=='desc'}">
+                        Total (high to low)
+                    </c:when>
+                    <c:otherwise>
+                        Id (high to low)
+                    </c:otherwise>
+                </c:choose>
+                    <i class="fa fa-angle-down"></i>
+                    <i class="fa fa-angle-up"></i>
+                </a></h5>
                 <ul class="nav-drop-menu">
-                    <li><a href="#">Price (high to low)</a>
+                    <li onClick="window.location='/admin/orders?searchId=${param.searchId}&searchName=${param.searchName}&searchEmail=${param.searchEmail}&sortBy=id&order=asc';"><a href="">Id (low to high)</a>
                     </li>
-                    <li><a href="#">Duration</a>
+                    <li onClick="window.location='/admin/orders?searchId=${param.searchId}&searchName=${param.searchName}&searchEmail=${param.searchEmail}&sortBy=name&order=asc';"><a href="">Name (low to high)</a>
                     </li>
-                    <li><a href="#">Stops</a>
+                    <li onClick="window.location='/admin/orders?searchId=${param.searchId}&searchName=${param.searchName}&searchEmail=${param.searchEmail}&sortBy=name&order=desc';"><a href="#">Name (high to low)</a>
                     </li>
-                    <li><a href="#">Arrival</a>
-                    </li>
-                    <li><a href="#">Departure</a>
+                    <li onClick="window.location='/admin/orders?searchId=${param.searchId}&searchName=${param.searchName}&searchEmail=${param.searchEmail}&sortBy=total&order=asc';"><a href="#">Total (low to high)</a>
+                    <li onClick="window.location='/admin/orders?searchId=${param.searchId}&searchName=${param.searchName}&searchEmail=${param.searchEmail}&sortBy=total&order=desc';"><a href="#">Total (high to low)</a>
                     </li>
                 </ul>
             </div>
@@ -85,55 +94,26 @@
                     <div class="booking-item-container">
                         <div class="booking-item">
                             <div class="row">
-                                <div class="col-md-2">
-                                    <div class="booking-item-airline-logo">
-                                        <img src="img/american-airlines.jpg" alt="Image Alternative text" title="Image Title" />
-                                        <p>American Airlines</p>
-                                    </div>
+                                <div class="col-md-1">${order.id}</div>
+                                <div class="col-md-3">
+                                        ${order.firstName} ${order.lastName}
                                 </div>
-                                <div class="col-md-5">
-                                    <div class="booking-item-flight-details">
-                                        <div class="booking-item-departure"><i class="fa fa-plane"></i>
-                                            <h5>10:25 PM</h5>
-                                            <p class="booking-item-date">Sun, Mar 22</p>
-                                            <p class="booking-item-destination">London, England, United Kingdom (LHR)</p>
-                                        </div>
-                                        <div class="booking-item-arrival"><i class="fa fa-plane fa-flip-vertical"></i>
-                                            <h5>12:25 PM</h5>
-                                            <p class="booking-item-date">Sat, Mar 23</p>
-                                            <p class="booking-item-destination">New York, NY, United States (JFK)</p>
-                                        </div>
-                                    </div>
+                                <div class="col-md-2" nowrap>
+                                    <i class="fa fa-phone"></i>&nbsp;${order.phone}<br/>
+                                    <i class="fa fa-envelope"></i>&nbsp;${order.email}
+                                </div>
+                                <div class="col-md-1">
+                                    $${order.total}
+                                </div>
+                                <div class="col-md-1">
+                                    <fmt:formatDate pattern="MM/dd/yyyy" value="${order.dateAdded}" />
+                                </div>
+                                <div class="col-md-1">
+                                        ${order.status}
                                 </div>
                                 <div class="col-md-2">
-                                    <h5>22h 50m</h5>
-                                    <p>non-stop</p>
-                                </div>
-                                <div class="col-md-3"><span class="booking-item-price">$447</span><span>/person</span>
-                                    <p class="booking-item-flight-class">Class: Business</p><a class="btn btn-primary" href="#">Select</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="booking-item-details">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <p>Flight Details</p>
-                                    <h5 class="list-title">London (LHR) to Charlotte (CLT)</h5>
-                                    <ul class="list">
-                                        <li>US Airways 731</li>
-                                        <li>Economy / Coach Class ( M), AIRBUS INDUSTRIE A330-300</li>
-                                        <li>Depart 09:55 Arrive 15:10</li>
-                                        <li>Duration: 9h 15m</li>
-                                    </ul>
-                                    <h5>Stopover: Charlotte (CLT) 7h 1m</h5>
-                                    <h5 class="list-title">Charlotte (CLT) to New York (JFK)</h5>
-                                    <ul class="list">
-                                        <li>US Airways 1873</li>
-                                        <li>Economy / Coach Class ( M), Airbus A321</li>
-                                        <li>Depart 22:11 Arrive 23:53</li>
-                                        <li>Duration: 1h 42m</li>
-                                    </ul>
-                                    <p>Total trip time: 17h 58m</p>
+                                    <a class="btn btn-primary" href="/admin/orders/view/${order.id}">View</a>&nbsp;&nbsp;&nbsp;
+                                    <a class="btn btn-primary" href="#" onClick="javascript: if (confirm('Are you sure you want to delete this order?')) window.location='/admin/orders/delete/${order.id}';">Delete</a>
                                 </div>
                             </div>
                         </div>

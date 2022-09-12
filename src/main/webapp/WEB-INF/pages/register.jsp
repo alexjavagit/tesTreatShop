@@ -5,7 +5,7 @@
 
 <div class="gap"></div>
 
-<c:url value="/newuser" var="regUrl" />
+<c:url value="/user/new" var="regUrl" />
 <div class="container">
     <div class="row" data-gutter="60">
         <div class="col-md-4">
@@ -15,37 +15,36 @@
         </div>
           <div class="col-md-4">
             <h3>New To Treat Shoes?</h3>
-            <c:if test="${exists ne null}">
-                <p>User already exists!</p>
-            </c:if>
-            <form action="${regUrl}" method="POST">
+              <p style="color: red">${errorMessage}</p>
+            <form action="/user/new" method="POST" modelAttribute="customUser">
+                <input type="hidden" name="id" value="" />
                 <div class="form-group form-group-icon-left"><i class="fa fa-customUser input-icon input-icon-show"></i>
                     <label>First Name *</label>
-                    <input class="form-control" placeholder="e.g. John" type="text" name="first_name" />
+                    <input class="form-control" value="${customUser.firstName}" type="text" name="firstName" required />
                 </div>
                 <div class="form-group form-group-icon-left"><i class="fa fa-customUser input-icon input-icon-show"></i>
                     <label>Last Name *</label>
-                    <input class="form-control" placeholder="e.g. Doe" type="text" name="last_name" />
+                    <input class="form-control" value="${customUser.lastName}" type="text" name="lastName" required />
                 </div>
                 <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon input-icon-show"></i>
                     <label>Email *</label>
-                    <input class="form-control" placeholder="e.g. johndoe@gmail.com" type="text" name="email" />
+                    <input class="form-control" value="${customUser.email}" type="text" name="email" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" />
                 </div>
                 <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon input-icon-show"></i>
                     <label>Phone *</label>
-                    <input class="form-control" placeholder="e.g. +380999999999" type="text" name="phone" />
+                    <input class="form-control" type="text" id="phone" name="phone" value="${customUser.phone}" required pattern="\([0-9]{3}\) [0-9]{3}[-][0-9]{4}" />
                 </div>
                 <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon input-icon-show"></i>
                     <label>Address</label>
-                    <input class="form-control" placeholder="e.g. Kiev, Sikorskogo Str 23/12" type="text" name="address" />
+                    <input class="form-control" value="${customUser.address}" type="text" name="address" required />
                 </div>
                 <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon input-icon-show"></i>
                     <label>Login *</label>
-                    <input class="form-control" placeholder="e.g. john11" type="text" name="login" />
+                    <input class="form-control" value="${customUser.login}" type="text" name="login" required pattern="[a-zA-Z0-9]{1,15}" />
                 </div>
                 <div class="form-group form-group-icon-left"><i class="fa fa-lock input-icon input-icon-show"></i>
                     <label>Password *</label>
-                    <input class="form-control" type="password" placeholder="my secret password" name="password" />
+                    <input class="form-control" type="password" placeholder="my secret password" name="password" required />
                 </div>
                 <input class="btn btn-primary" type="submit" value="Sign up for Treat Shoes" />
             </form>
@@ -57,26 +56,8 @@
 <jsp:include page="footer.jsp"></jsp:include>
 
 
-<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-    <title>Prog.kiev.ua</title>
-</head>
-<body>
-<div align="center">
-    <c:url value="/newuser" var="regUrl" />
-
-    <form action="${regUrl}" method="POST">
-        Login:<br/><input type="text" name="login"><br/>
-        Password:<br/><input type="password" name="password"><br/>
-        E-mail:<br/><input type="text" name="email"><br/>
-        Phone:<br/><input type="text" name="phone"><br/>
-        <input type="submit" />
-
-        <c:if test="${exists ne null}">
-            <p>User already exists!</p>
-        </c:if>
-    </form>
-</div>
-</body>
-</html>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
+<script>
+    $('#phone').inputmask("(999) 999-9999");
+</script>

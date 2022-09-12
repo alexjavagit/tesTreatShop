@@ -80,7 +80,7 @@ public class AdminUsersController {
     @GetMapping("/users/new")
     public String newUser(Model model) {
         model.addAttribute("action", "/admin/users/new");
-        return "user_edit";
+        return "userEdit";
     }
 
     @GetMapping("/users/update/{id}")
@@ -97,7 +97,7 @@ public class AdminUsersController {
         String dateAdded = customUser.getDateAdded().format(format);
         model.addAttribute("dateAdded", dateAdded);
 
-        return "user_edit";
+        return "userEdit";
     }
 
     @PostMapping("/users/new")
@@ -118,7 +118,7 @@ public class AdminUsersController {
         }
         if (error == 1) {
             model.addAttribute("theUser", theUser);
-            return "user_edit";
+            return "userEdit";
         }
         theUser.setRole(UserRole.USER);
         theUser.setPassword(encoder.encode(theUser.getPassword()));
@@ -148,7 +148,7 @@ public class AdminUsersController {
             DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM yyyy");
             String dateAdded = userExists.getDateAdded().format(format);
             model.addAttribute("dateAdded", dateAdded);
-            return "user_edit";
+            return "userEdit";
         }
 
         //CustomUser customUser = new CustomUser(login, encoder.encode(passwd), firstName, lastName, UserRole.USER, email, phone, address);
