@@ -17,6 +17,7 @@ import ua.kiev.prog.service.*;
 import ua.kiev.prog.entity.POJO.ProductToCart;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +37,6 @@ public class ShoppingCartController {
     private OrderItemsService orderItemsService;
 
 
-
     @GetMapping("/shoppingCart")
     public String shoppingCart(Model model) {
         showShoppingCart(model);
@@ -54,8 +54,8 @@ public class ShoppingCartController {
             message = "{\"message\" : \"Some error. Please try again.\"";
         }
 
-        message = message + ", \"total\" : " + shoppingCartService.getTotal() +", ";
-        message = message + "\"cartCount\" : " + shoppingCartService.getCartCount() +"}";
+        message = message + ", \"total\" : " + shoppingCartService.getTotal() + ", ";
+        message = message + "\"cartCount\" : " + shoppingCartService.getCartCount() + "}";
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
 
@@ -73,8 +73,8 @@ public class ShoppingCartController {
         } else {
             message = "{\"message\" : \"Some error. Please try again.\"";
         }
-        message = message + ", \"total\" : " + shoppingCartService.getTotal() +", ";
-        message = message + "\"cartCount\" : " + shoppingCartService.getCartCount() +"}";
+        message = message + ", \"total\" : " + shoppingCartService.getTotal() + ", ";
+        message = message + "\"cartCount\" : " + shoppingCartService.getCartCount() + "}";
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
 
@@ -85,7 +85,7 @@ public class ShoppingCartController {
     public String checkout(Model model) {
         showShoppingCart(model);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)){
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String login = user.getUsername();
             CustomUser dbCustomUser = userService.findByLogin(login);
@@ -103,8 +103,8 @@ public class ShoppingCartController {
             Long productId = Long.parseLong(parts[0]);
             Product product = productService.getById(productId);
             if (product != null) {
-                cartProducts.put(product.getId()+"_"+parts[1], product);
-                productsSizes.put(product.getId()+"_"+parts[1], parts[1]);
+                cartProducts.put(product.getId() + "_" + parts[1], product);
+                productsSizes.put(product.getId() + "_" + parts[1], parts[1]);
             }
         }
         model.addAttribute("products", cartProducts);
@@ -121,11 +121,12 @@ public class ShoppingCartController {
                              @RequestParam(value = "phone", required = false) String phone) {
         CustomUser dbCustomUser = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)){
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String login = user.getUsername();
             dbCustomUser = userService.findByLogin(login);
         }
+
 
         Order order = new Order(email, firstName, lastName, phone, shippingAddress, OrderStatus.NEW, dbCustomUser, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
         orderService.saveOrder(order);
@@ -137,17 +138,23 @@ public class ShoppingCartController {
             Long productId = Long.parseLong(parts[0]);
             Product product = productService.getById(productId);
             if (product != null) {
-                OrderItems orderItem = new OrderItems(order, product, new BigDecimal(entry.getValue()), product.getPrice(), parts[1]);
+                BigDecimal dPrice;
+                if (product.getDiscount()>0) {
+                    dPrice = product.getPrice().subtract(product.getPrice().multiply(BigDecimal.valueOf(product.getDiscount()).divide(BigDecimal.valueOf(100))));
+                } else {
+                    dPrice = product.getPrice();
+                }
+                OrderItems orderItem = new OrderItems(order, product, new BigDecimal(entry.getValue()), dPrice.setScale(0, RoundingMode.DOWN), parts[1]);
                 orderItemsService.saveOrder(orderItem);
-                total = total.add(product.getPrice().multiply(new BigDecimal(entry.getValue())));
+                total = total.add(dPrice.multiply(new BigDecimal(entry.getValue())));
             }
         }
         order.setTotal(total);
-        //orderService.saveOrder(order);
+
         //clear shopping cart
         shoppingCartService.clearCart();
 
-        model.addAttribute("orderId",  order.getId());
+        model.addAttribute("orderId", order.getId());
         model.addAttribute("cartCount", 0);
         return "orderDone";
     }

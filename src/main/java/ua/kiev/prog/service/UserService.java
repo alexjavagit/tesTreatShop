@@ -16,7 +16,7 @@ public interface UserService {
     CustomUser getById(Long id);
 
     CustomUser existsByLogin(String login);
-    void addUser(CustomUser customUser);
+//    void addUser(CustomUser customUser);
     void updateUser(CustomUser customUser);
     void deleteById(Long id);
 

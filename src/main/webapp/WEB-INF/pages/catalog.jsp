@@ -35,7 +35,13 @@
                     <h5 class="thumb-title"><a class="text-darken" href="/product/${product.id}">${product.name}</a></h5>
                     <p class="mb0"><small><i class="fa fa-map-marker"></i> ${product.category.name}</small>
                     </p>
-                    <p class="mb0 text-darken"><span class="text-lg lh1em text-color">$${product.price}</span><small> </small>
+                    <p class="mb0 text-darken"><span class="text-lg lh1em text-color">
+                        <c:if test="${product.discount > 0}">
+                            <c:set var="dPrice" value="${product.price - product.price*(product.discount/100)}"/>
+                            <s>$${product.price}</s> $${dPrice.intValue()}
+                        </c:if>
+                        <c:if test="${product.discount == 0}">$${product.price}</c:if>
+                    </span><small> </small>
                     </p>
                 </div>
             </div>

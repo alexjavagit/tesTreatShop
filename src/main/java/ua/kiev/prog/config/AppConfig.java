@@ -45,7 +45,7 @@ public class AppConfig extends GlobalMethodSecurityConfiguration {
             @Override
             public void run(String... strings) throws Exception {
                 CustomUser customUser = new CustomUser(ADMIN, encoder.encode("password"), UserRole.ADMIN);
-                userService.addUser(customUser);
+                userService.updateUser(customUser);
 
 
                 Category mens = new Category("Men's shoes", "male");

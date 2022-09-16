@@ -23,19 +23,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-5 col-md-offset-7">
-                                <!-- START TESTIMONIAL -->
-                                <div class="testimonial text-white mt50">
-                                    <div class="testimonial-inner">
-                                        <blockquote>
-                                            <p>Vitae leo conubia cras est fermentum litora blandit massa tempor per donec justo libero duis</p>
-                                        </blockquote>
-                                    </div>
-                                    <div class="testimonial-author">
-                                        <img src="img/50x50_1.jpeg" style="width: 50px; height: 70px" alt="Image Alternative text" title="Sevenly Shirts - June 2012  2" />
-                                        <p class="testimonial-author-name">John Doe</p>
-                                    </div>
-                                </div>
-                                <!-- END TESTIMONIAL -->
+
                             </div>
                         </div>
                     </div>
@@ -48,19 +36,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-5 col-md-offset-7">
-                                <!-- START TESTIMONIAL -->
-                                <div class="testimonial text-white mt50">
-                                    <div class="testimonial-inner">
-                                        <blockquote>
-                                            <p>Vehicula velit a duis class augue curae accumsan tempor semper id integer adipiscing mattis conubia</p>
-                                        </blockquote>
-                                    </div>
-                                    <div class="testimonial-author">
-                                        <img src="img/50x50_2.jpeg" style="width: 50px; height: 70px" alt="Image Alternative text" title="Flare lens flare" />
-                                        <p class="testimonial-author-name">Blake Abraham</p>
-                                    </div>
-                                </div>
-                                <!-- END TESTIMONIAL -->
+
                             </div>
                         </div>
                     </div>
@@ -73,19 +49,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-5 col-md-offset-7">
-                                <!-- START TESTIMONIAL -->
-                                <div class="testimonial text-white mt50">
-                                    <div class="testimonial-inner">
-                                        <blockquote>
-                                            <p>Interdum consectetur nam id eu suspendisse ipsum in magna curae metus laoreet pulvinar habitant gravida</p>
-                                        </blockquote>
-                                    </div>
-                                    <div class="testimonial-author">
-                                        <img src="img/50x50_3.jpeg" style="width: 50px; height: 70px" alt="Image Alternative text" title="Afro" />
-                                        <p class="testimonial-author-name">Ann Taylor</p>
-                                    </div>
-                                </div>
-                                <!-- END TESTIMONIAL -->
+
                             </div>
                         </div>
                     </div>

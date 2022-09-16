@@ -48,7 +48,7 @@ public class UserController {
         }
         customUser.setRole(UserRole.USER);
         customUser.setPassword(encoder.encode(customUser.getPassword()));
-        userService.addUser(customUser);
+        userService.updateUser(customUser);
 
         return "redirect:/login";
     }

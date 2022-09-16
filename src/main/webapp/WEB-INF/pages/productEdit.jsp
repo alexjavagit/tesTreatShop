@@ -1,6 +1,6 @@
 <jsp:include page="header.jsp"  flush="true"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 <div class="container">
     <h3 class="booking-title">Product Settings</h3>
@@ -31,7 +31,7 @@
                             <label>Price</label>
                             <input class="form-control" name="price" value="${theProduct.price}" type="text" required pattern="[0-9\.]{2,6}" />
                         </div>
-                        <div class="form-group form-group-icon-left"><i class="fa fa-pencil input-icon"></i>
+                        <div class="form-group form-group-icon-left"><i class="fa fa-percent input-icon"></i>
                             <label>Discount</label>
                             <input class="form-control" name="discount" value="${theProduct.discount}" type="text" pattern="[0-9]{0,2}" />
                         </div>

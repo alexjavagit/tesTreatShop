@@ -78,11 +78,11 @@ public class UserServiceImpl  implements UserService {
         return userRepository.findByLogin(login);
     }
 
-    @Override
-    @Transactional
-    public void addUser(CustomUser customUser) {
-        userRepository.save(customUser);
-    }
+//    @Override
+//    @Transactional
+//    public void addUser(CustomUser customUser) {
+//        userRepository.save(customUser);
+//    }
 
     @Override
     @Transactional

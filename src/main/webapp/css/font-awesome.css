@@ -615,6 +615,9 @@
 .fa-phone:before {
   content: "\f095";
 }
+.fa-percent:before {
+  content: "\f295";
+}
 .fa-square-o:before {
   content: "\f096";
 }

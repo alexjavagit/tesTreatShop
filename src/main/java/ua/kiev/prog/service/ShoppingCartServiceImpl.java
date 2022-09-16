@@ -4,6 +4,7 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
@@ -97,10 +98,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             Long productId = Long.parseLong(parts[0]);
             Product eproduct = productRepository.getById(productId);
             if (eproduct != null) {
-                total = total + eproduct.getPrice().intValue()*entry.getValue();
+                if (eproduct.getDiscount() > 0) {
+                    BigDecimal rPrice = eproduct.getPrice().subtract(eproduct.getPrice().multiply(BigDecimal.valueOf(eproduct.getDiscount()).divide(BigDecimal.valueOf(100))));
+                    total = total + rPrice.intValue() * entry.getValue();
+                } else {
+                    total = total + eproduct.getPrice().intValue() * entry.getValue();
+                }
             }
         }
-        return total;
+        return total.intValue();
     }
 
     @Override

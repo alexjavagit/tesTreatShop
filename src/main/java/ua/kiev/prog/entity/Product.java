@@ -1,10 +1,13 @@
 package ua.kiev.prog.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CollectionType;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.*;
@@ -36,7 +39,8 @@ public class Product {
 
     private BigDecimal price;
 
-    private Integer discount;
+    @Column(nullable=false)
+    private Integer discount = 0;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(

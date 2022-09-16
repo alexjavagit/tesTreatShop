@@ -61,4 +61,5 @@ public class CustomUser {
         this.role = role;
     }
 
+
 }

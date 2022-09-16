@@ -15,6 +15,12 @@
             <p id="message" style="display: none; color: red;">Error! Please contact administrator!</p>
             <ul class="booking-list">
             <c:forEach items="${products.entrySet()}" var="product">
+                <c:if test="${product.getValue().discount > 0}">
+                    <c:set var="dPrice" value="${product.getValue().price - product.getValue().price*(product.getValue().discount/100)}"/>
+                </c:if>
+                <c:if test="${product.getValue().discount == 0}">
+                    <c:set var="dPrice" value="${product.getValue().price}"/>
+                </c:if>
                 <li id="li_${product.getKey()}">
                         <div class="row">
                             <div class="col-md-3">
@@ -27,15 +33,15 @@
                             <div class="col-md-6">
                                 <h5 class="booking-item-title"><a class="hover-img" href="/product/${product.getValue().id}">${product.getValue().name}</a></h5>
                                 <p class="booking-item-address" style="font-size: 16px;!important;">Size: ${productsSizes.get(product.getKey())}</p>
-                                <p class="booking-item-address" style="font-size: 16px;!important;">Price: $${product.getValue().price}</p>
+                                <p class="booking-item-address" style="font-size: 16px;!important;">Price: $${dPrice.intValue()}</p>
                                 <p class="booking-item-address" style="font-size: 16px;!important;">Qty:
-                                    <a href="#" onClick="javascript: removeProductQtyFromCart(${product.getValue().id},'${productsSizes.get(product.getKey())}',${product.getValue().price});" class="fa fa-minus-circle" style="font-size: 18px;!important;"></a> <span id="qty_${product.getKey()}">${productsQty.get(product.getKey())}</span> <a href="#" onClick="javascript: addProductQtyToCart(${product.getValue().id},'${productsSizes.get(product.getKey())}',${product.getValue().price})" class="fa fa-plus-circle" style="font-size: 18px;!important;"></a>
+                                    <a href="#" onClick="javascript: removeProductQtyFromCart(${product.getValue().id},'${productsSizes.get(product.getKey())}',${dPrice.intValue()});" class="fa fa-minus-circle" style="font-size: 18px;!important;"></a> <span id="qty_${product.getKey()}">${productsQty.get(product.getKey())}</span> <a href="#" onClick="javascript: addProductQtyToCart(${product.getValue().id},'${productsSizes.get(product.getKey())}',${dPrice.intValue()})" class="fa fa-plus-circle" style="font-size: 18px;!important;"></a>
                                 </p>
                             </div>
-                            <div class="booking-item-title" id="subtotal_${product.getKey()}">$${product.getValue().price*productsQty.get(product.getKey())}</div>
+                            <div class="booking-item-title" id="subtotal_${product.getKey()}">$${dPrice.intValue()*productsQty.get(product.getKey())}</div>
                         </div>
                 </li>
-                <c:set var = "total" value = "${total + product.getValue().price*productsQty.get(product.getKey())}"/>
+                <c:set var = "total" value = "${total + dPrice.intValue()*productsQty.get(product.getKey())}"/>
             </c:forEach>
                 <li id="totalli" <c:if test="${products.size() eq 0}">style="display: none"</c:if>>
                     <div class="row">

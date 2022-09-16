@@ -2299,7 +2299,7 @@
                 q: false
             });
             if (el.addEventListener) {
-                el.addEventListener(name, fn, bubble || false);
+                el.addEventListener(name, fn, {passive: bubble || false});
             } else if (el.attachEvent) {
                 el.attachEvent("on" + name, fn);
             } else {

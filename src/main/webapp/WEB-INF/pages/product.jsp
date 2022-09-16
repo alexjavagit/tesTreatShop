@@ -30,8 +30,14 @@
                 <div class="booking-item-meta">
                     <h3 class="lh1em mt40">${product.name}</h3>
 
-                    <div class="col-md-3">
-                        <p class="booking-item-header-price"><span class="text-lg">$${product.price}</span></p>
+                    <div class="col-md-6">
+                        <p class="booking-item-header-price"><span class="text-lg">
+                            <c:if test="${product.discount > 0}">
+                                <c:set var="dPrice" value="${product.price - product.price*(product.discount/100)}"/>
+                                <s>$${product.price}</s> $${dPrice.intValue()}
+                            </c:if>
+                        <c:if test="${product.discount == 0}">$${product.price}</c:if>
+                        </span></p>
                     </div>
 
                     <div class="gap"></div>

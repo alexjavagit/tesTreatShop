@@ -94,35 +94,38 @@ public class AdminUsersController {
 
 
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM yyyy");
-        String dateAdded = customUser.getDateAdded().format(format);
-        model.addAttribute("dateAdded", dateAdded);
-
+        if (customUser.getDateAdded() != null) {
+            String dateAdded = customUser.getDateAdded().format(format);
+            model.addAttribute("dateAdded", dateAdded);
+        }
         return "userEdit";
     }
 
     @PostMapping("/users/new")
     public String saveUser(Model model,
-                           @ModelAttribute("theUser") CustomUser theUser
+                           @ModelAttribute("theUser") CustomUser theNewUser
                            ) {
-        System.out.println(theUser);
+        System.out.println(theNewUser);
         int error = 0;
-        CustomUser userExists = userService.findByEmail(theUser.getEmail());
+        CustomUser userExists = userService.findByEmail(theNewUser.getEmail());
         if (userExists != null) {
             model.addAttribute("errorMessage", "Oops!  There is already a user registered with the email provided.");
             error = 1;
         }
-        userExists = userService.findByLogin(theUser.getLogin());
+        userExists = userService.findByLogin(theNewUser.getLogin());
         if (userExists != null) {
             model.addAttribute("errorMessage", "Oops!  There is already a user registered with the login provided.");
             error = 1;
         }
         if (error == 1) {
-            model.addAttribute("theUser", theUser);
+            model.addAttribute("theUser", theNewUser);
             return "userEdit";
         }
-        theUser.setRole(UserRole.USER);
-        theUser.setPassword(encoder.encode(theUser.getPassword()));
-        userService.addUser(theUser);
+        theNewUser.setRole(UserRole.USER);
+
+        theNewUser.setPassword(encoder.encode(theNewUser.getPassword()));
+        userService.updateUser(theNewUser);
+
 
         return "redirect:/admin/users";
     }
@@ -150,9 +153,17 @@ public class AdminUsersController {
             model.addAttribute("dateAdded", dateAdded);
             return "userEdit";
         }
+        CustomUser user = userService.getById(theUser.getId());
 
-        //CustomUser customUser = new CustomUser(login, encoder.encode(passwd), firstName, lastName, UserRole.USER, email, phone, address);
-        userService.updateUser(theUser);
+        user.setFirstName(theUser.getFirstName());
+        user.setLastName(theUser.getLastName());
+        user.setEmail(theUser.getEmail());
+        user.setPhone(theUser.getPhone());
+        user.setAddress(theUser.getAddress());
+        user.setLogin(theUser.getLogin());
+        user.setPassword(encoder.encode(theUser.getPassword()));
+
+        userService.updateUser(user);
 
         return "redirect:/admin/users";
     }

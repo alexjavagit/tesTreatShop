@@ -52,10 +52,10 @@ public class AdminProductsController {
                                @RequestParam(value = "size", required = false) String size
     ) {
 
-        int ipage = (page == null) ? 0 : Integer.parseInt(page)-1;
+        int ipage = (page == null) ? 0 : Integer.parseInt(page) - 1;
         int isize = (size == null) ? 10 : Integer.parseInt(size);
         Sort.Direction direction = (order == null) ? Sort.Direction.DESC : ((order.equals("desc")) ? Sort.Direction.DESC : Sort.Direction.ASC);
-        String sSortBy = (sortBy == null) ? "id" : ((sortBy.equals("price") || sortBy.equals("name")) ? sortBy :  "id");
+        String sSortBy = (sortBy == null) ? "id" : ((sortBy.equals("price") || sortBy.equals("name")) ? sortBy : "id");
         Pageable pagingSort = PageRequest.of(ipage, isize, direction, sSortBy);
 
 
@@ -67,13 +67,13 @@ public class AdminProductsController {
             }
         }
         Page<Product> productList;
-        if (!icategory.equals(0L) && (searchName != null && searchName.length()>0)) {
+        if (!icategory.equals(0L) && (searchName != null && searchName.length() > 0)) {
 
             productList = productService.findByCategoryAndName(icategory, searchName, pagingSort);
         } else if (!icategory.equals(0L)) {
 
             productList = productService.findByCategory(icategory, pagingSort);
-        } else if (searchName != null && searchName.length()>0) {
+        } else if (searchName != null && searchName.length() > 0) {
 
             productList = productService.findByName(searchName, pagingSort);
         } else {
@@ -89,7 +89,7 @@ public class AdminProductsController {
         model.addAttribute("products", productList.getContent());
         model.addAttribute("endpage", productList.getTotalPages());
         model.addAttribute("startpage", 1);
-        model.addAttribute("currentPage", productList.getNumber()+1);
+        model.addAttribute("currentPage", productList.getNumber() + 1);
 
         List<Category> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
@@ -137,7 +137,7 @@ public class AdminProductsController {
         Integer discount;
         try {
             discount = Integer.parseInt(productData.getDiscount());
-        } catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             discount = 0;
         }
 
@@ -168,7 +168,7 @@ public class AdminProductsController {
                 product.addProductSizes(catsSizes);
             }
             productService.save(product);
-            message = "{\"id\" : \""+product.getId()+"\"}";
+            message = "{\"id\" : \"" + product.getId() + "\"}";
         }
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
@@ -190,7 +190,7 @@ public class AdminProductsController {
         //return new ResponseEntity<String>(productImages.getId().toString(), HttpStatus.OK);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        String message = "{\"id\" : \""+productImages.getId()+"\"}";
+        String message = "{\"id\" : \"" + productImages.getId() + "\"}";
         return new ResponseEntity<String>(message, headers, HttpStatus.OK);
     }
 
@@ -204,7 +204,5 @@ public class AdminProductsController {
         headers.add("Content-Type", "application/json; charset=utf-8");
         String message = "{\"message\" : \"Product image Deleted\"}";
         return new ResponseEntity<String>(message, headers, HttpStatus.OK);
-
-        //return new ResponseEntity<String>("Product image Deleted", HttpStatus.OK);
     }
 }

@@ -49,7 +49,7 @@ public class CatalogController {
     public String listByCategory(Model model, @PathVariable String categoryName){
         Category category = categoryService.findByShortName(categoryName);
         if (category == null) {
-            return "redirect: /catalog";
+            return "redirect:/";
         }
 
         List<Product> list = productService.getProductsByCategory((Long) category.getId());

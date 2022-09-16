@@ -30,6 +30,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private CustomUser customUser;
 
 
@@ -53,6 +54,7 @@ public class Order {
     private String phone;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<OrderItems> orderItems = new ArrayList<>();
 
     @Column(name = "total")
@@ -72,19 +74,4 @@ public class Order {
         this.updated = updated;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", dateAdded=" + dateAdded +
-                ", updated=" + updated +
-                ", customUser=" + customUser +
-                ", status=" + status +
-                ", shippingAddress='" + shippingAddress + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
-    }
 }
