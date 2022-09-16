@@ -75,12 +75,6 @@
             <version>5.7.3</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-            <version>7.2</version>
-        </dependency>
 
     </dependencies>
 
