@@ -9,6 +9,8 @@ public class CategoryNotFoundException extends Exception {
     public CategoryNotFoundException(Long id) {
         super("Category not found with ID " + id);
     }
-    public CategoryNotFoundException(String name) { super(String.format("Category not found with Name " + name));
+
+    public CategoryNotFoundException(String name) {
+        super(String.format("Category not found with Name " + name));
     }
 }

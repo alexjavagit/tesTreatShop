@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public String userProfile(Model model){
+    public String userProfile(Model model) {
         //org.springframework.security.core.userdetails.User user = getCurrentUser();
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(user);
@@ -69,7 +69,7 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(Model model,
-                           @ModelAttribute("customUser") CustomUser customUser) {
+                             @ModelAttribute("customUser") CustomUser customUser) {
         System.out.println(customUser);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(user);
@@ -98,13 +98,11 @@ public class UserController {
         dbCustomUser.setPhone(customUser.getPhone());
         dbCustomUser.setAddress(customUser.getAddress());
         dbCustomUser.setLogin(customUser.getLogin());
-        //customUser.setRole(UserRole.USER);
         dbCustomUser.setPassword(encoder.encode(customUser.getPassword()));
         userService.updateUser(dbCustomUser);
 
         model.addAttribute("errorMessage", "Profile was successfully changed!");
         model.addAttribute("errorMessageColor", "navy");
-
 
 
         model.addAttribute("customUser", dbCustomUser);

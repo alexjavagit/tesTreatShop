@@ -1,39 +1,42 @@
-<jsp:include page="header.jsp"  flush="true"></jsp:include>
+<jsp:include page="header.jsp" flush="true"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 <div class="container">
     <h3 class="booking-title">Product Settings</h3>
 
-        <div class="row">
-            <p id="message"></p>
-            <div class="col-md-9" style="width: 90%!important">
-                <div class="row">
-                    <div class="col-md-5">
-                        <form id="formData" method="post" action="" modelAttribute="theProduct">
+    <div class="row">
+        <p id="message"></p>
+        <div class="col-md-9" style="width: 90%!important">
+            <div class="row">
+                <div class="col-md-5">
+                    <form id="formData" method="post" action="" modelAttribute="theProduct">
                         <input type="hidden" name="id" value="${theProduct.id}"/>
 
                         <p style="color: red">${errorMessage}</p>
                         <div class="form-group form-group-icon-left"><i class="fa fa-user input-icon"></i>
                             <label>Name</label>
-                            <input class="form-control" name="name" value="${theProduct.name}" type="text" required />
+                            <input class="form-control" name="name" value="${theProduct.name}" type="text" required/>
                         </div>
                         <div class="form-group form-group-icon-left"><i class="fa fa-folder input-icon"></i>
                             <label>Category</label>
                             <select name="category" class="form-control" required>
                                 <option <c:if test="${theProduct.category.id == ''}"> Selected</c:if>></option>
                                 <c:forEach items="${categories}" var="category">
-                                    <option value="${category.id}" <c:if test="${theProduct.category.id == category.id}"> Selected</c:if>>${category.name}</option>
+                                    <option value="${category.id}" <c:if
+                                            test="${theProduct.category.id == category.id}"> Selected</c:if>>${category.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
                         <div class="form-group form-group-icon-left"><i class="fa fa-dollar input-icon"></i>
                             <label>Price</label>
-                            <input class="form-control" name="price" value="${theProduct.price}" type="text" required pattern="[0-9\.]{2,6}" />
+                            <input class="form-control" name="price" value="${theProduct.price}" type="text" required
+                                   pattern="[0-9\.]{2,6}"/>
                         </div>
                         <div class="form-group form-group-icon-left"><i class="fa fa-percent input-icon"></i>
                             <label>Discount</label>
-                            <input class="form-control" name="discount" value="${theProduct.discount}" type="text" pattern="[0-9]{0,2}" />
+                            <input class="form-control" name="discount" value="${theProduct.discount}" type="text"
+                                   pattern="[0-9]{0,2}"/>
                         </div>
 
                         <div class="form-group form-group-icon-left">
@@ -45,38 +48,42 @@
                         <hr>
                         <input type="submit" class="btn btn-primary" value="Submit">
                         <br/><br/>
-                        </form>
-                    </div>
-                    <div id="formImagesDiv" class="col-md-7" >
-                        <form id="formImages" method="post" action="" enctype="multipart/form-data">
-                        <div id="divImagesButt" class="row row-no-gutter" <c:if test="${theProduct.id eq null}">style="display: none"</c:if>>
-                        <c:forEach items="${theProduct.productImages}" var="image">
-                            <div id="div${image.id}" class="col-md-4" style="padding: 4px!important">
-                                <div class="thumb">
-                                    <a class="hover-img" href="#">
-                                        <img src="data:;base64,${image.image}" alt="${image.id}" style="width: 182px; height: 140px;" />
-                                        <div class="hover-inner hover-inner-block hover-inner-bottom hover-inner-bg-black hover-inner-sm hover-hold">
-                                            <div class="text-small">
-                                                <a href="#" onClick="javascript: delete_pic('${image.id}');">Delete</a>
+                    </form>
+                </div>
+                <div id="formImagesDiv" class="col-md-7">
+                    <form id="formImages" method="post" action="" enctype="multipart/form-data">
+                        <div id="divImagesButt" class="row row-no-gutter"
+                             <c:if test="${theProduct.id eq null}">style="display: none"</c:if>>
+                            <c:forEach items="${theProduct.productImages}" var="image">
+                                <div id="div${image.id}" class="col-md-4" style="padding: 4px!important">
+                                    <div class="thumb">
+                                        <a class="hover-img" href="#">
+                                            <img src="data:;base64,${image.image}" alt="${image.id}"
+                                                 style="width: 182px; height: 140px;"/>
+                                            <div class="hover-inner hover-inner-block hover-inner-bottom hover-inner-bg-black hover-inner-sm hover-hold">
+                                                <div class="text-small">
+                                                    <a href="#"
+                                                       onClick="javascript: delete_pic('${image.id}');">Delete</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    </div>
+
                                 </div>
+                            </c:forEach>
 
+                            <div id="btnAdd" class="col-md-4" style="padding: 4px!important">
+                                <input id="fileInput" type="file" style="display:none;" accept="image/png, image/jpeg"/>
+                                <a href="#" onClick="javascript: document.getElementById('fileInput').click();"
+                                   class="btn btn-primary mb20"><i class="fa fa-plus-circle"></i>Add new photo</a>
                             </div>
-                        </c:forEach>
-
-                        <div id="btnAdd" class="col-md-4" style="padding: 4px!important">
-                            <input id="fileInput" type="file" style="display:none;" accept="image/png, image/jpeg" />
-                            <a href="#" onClick="javascript: document.getElementById('fileInput').click();" class="btn btn-primary mb20"><i class="fa fa-plus-circle"></i>Add new photo</a>
                         </div>
-                        </div>
-                        </form>
+                    </form>
                 </div>
 
             </div>
         </div>
-        </div>
+    </div>
     </form>
 </div>
 
@@ -98,7 +105,7 @@
         // var formData = {}
         var form = $('#formImages')[0];
         var data = new FormData(form);
-        console.log(data +'------' + $("input[name=id]").val());
+        console.log(data + '------' + $("input[name=id]").val());
         data.append("id", $("input[name=id]").val());
         data.append("file", file);
         $.ajax({
@@ -117,7 +124,7 @@
                     "<img src=\"" + URL.createObjectURL(file) + "\" style=\"width: 182px; height: 140px;\" />" +
                     "<div class=\"hover-inner hover-inner-block hover-inner-bottom hover-inner-bg-black hover-inner-sm hover-hold\">" +
                     "<div class=\"text-small\">" +
-                    "<a href=\"#\" onClick=\"javascript: delete_pic('"+data+"');\">Delete</a>" +
+                    "<a href=\"#\" onClick=\"javascript: delete_pic('" + data + "');\">Delete</a>" +
                     "</div>" +
                     "</div>" +
                     "</a>" +
@@ -131,7 +138,7 @@
     };
 
 
-    $( "#formData" ).submit(function( event ) {
+    $("#formData").submit(function (event) {
         event.preventDefault();
         var formData = {};
         var form = this;
@@ -143,11 +150,11 @@
         formData['discount'] = $("input[name=discount]").val();
         formData['description'] = $("textarea[name=description]").val();
         $.ajax({
-            url:'/admin/products/updateData',
-            dataType : 'json',
+            url: '/admin/products/updateData',
+            dataType: 'json',
             type: "post",
             contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(formData),
+            data: JSON.stringify(formData),
             success: function (data) {
                 console.log('success');
                 console.log(data);
@@ -165,12 +172,12 @@
     function delete_pic(pid) {
         var formData = {}
         formData['id'] = pid;
-        $('#div'+pid).hide();
+        $('#div' + pid).hide();
         $.ajax({
-            url:'/admin/products/deleteFile',
+            url: '/admin/products/deleteFile',
             contentType: "application/json; charset=utf-8",
-            data : JSON.stringify(formData),
-            dataType : 'json',
+            data: JSON.stringify(formData),
+            dataType: 'json',
             type: "POST",
             success: function (data) {
                 console.log(data);
@@ -180,4 +187,4 @@
     }
 </script>
 
-<jsp:include page="footer.jsp"  flush="true"></jsp:include>
+<jsp:include page="footer.jsp" flush="true"></jsp:include>

@@ -127,7 +127,6 @@ public class ShoppingCartController {
             dbCustomUser = userService.findByLogin(login);
         }
 
-
         Order order = new Order(email, firstName, lastName, phone, shippingAddress, OrderStatus.NEW, dbCustomUser, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
         orderService.saveOrder(order);
 
@@ -139,7 +138,7 @@ public class ShoppingCartController {
             Product product = productService.getById(productId);
             if (product != null) {
                 BigDecimal dPrice;
-                if (product.getDiscount()>0) {
+                if (product.getDiscount() > 0) {
                     dPrice = product.getPrice().subtract(product.getPrice().multiply(BigDecimal.valueOf(product.getDiscount()).divide(BigDecimal.valueOf(100))));
                 } else {
                     dPrice = product.getPrice();

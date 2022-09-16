@@ -1,4 +1,4 @@
-<jsp:include page="header.jsp"  flush="true"></jsp:include>
+<jsp:include page="header.jsp" flush="true"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="container">
@@ -9,15 +9,17 @@
         <input type="hidden" name="order" value=""/>
         <div class="row">
             <div class="col-md-3">
-                <div class="form-group form-group-icon-left"><i class="fa fa-map-marker input-icon input-icon-hightlight"></i>
+                <div class="form-group form-group-icon-left"><i
+                        class="fa fa-map-marker input-icon input-icon-hightlight"></i>
                     <label>Name</label>
-                    <input class="typeahead form-control" name="searchName" value="${param.searchName}" placeholder="" type="text" />
+                    <input class="typeahead form-control" name="searchName" value="${param.searchName}" placeholder=""
+                           type="text"/>
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group form-group-icon-left">
                     <label><br/></label>
-                    <input type="submit" value="SEARCH" style="font-size: 14px; padding: 6px 12px;" />
+                    <input type="submit" value="SEARCH" style="font-size: 14px; padding: 6px 12px;"/>
                 </div>
             </div>
             <div class="col-md-2">
@@ -27,7 +29,7 @@
                         <c:forEach begin="${startpage}" end="${endpage}" var="p">
                             <label class="btn btn-primary <c:if test="${currentPage == p}">active</c:if>"
                                    onClick="window.location='/admin/categories?searchName=${param.searchName}&sortBy=${param.sortBy}&order=${param.order}&page=${p}';">
-                                <input type="radio" name="options"  />${p}</label>
+                                <input type="radio" name="options"/>${p}</label>
                         </c:forEach>
                     </div>
                 </div>
@@ -52,9 +54,11 @@
                             <i class="fa fa-angle-up"></i>
                         </a></h5>
                     <ul class="nav-drop-menu">
-                        <li onClick="window.location='/admin/categories?searchName=${param.searchName}&sortBy=id&order=asc';"><a href="#">Id (low to high)</a>
+                        <li onClick="window.location='/admin/categories?searchName=${param.searchName}&sortBy=id&order=asc';">
+                            <a href="#">Id (low to high)</a>
                         </li>
-                        <li onClick="window.location='/admin/categories?searchName=${param.searchName}&sortBy=name&order=asc';"><a href="#">Name</a>
+                        <li onClick="window.location='/admin/categories?searchName=${param.searchName}&sortBy=name&order=asc';">
+                            <a href="#">Name</a>
                         </li>
                     </ul>
                 </div>
@@ -71,13 +75,14 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="booking-item-airline-logo">
-                                                ${category.id}
+                                                    ${category.id}
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="booking-item-flight-details">
                                                 <div class="booking-item-arrival">
-                                                    <p class="booking-item-date" style="font-size: 14px;!important">${category.name}</p>
+                                                    <p class="booking-item-date"
+                                                       style="font-size: 14px;!important">${category.name}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -99,4 +104,4 @@
     </form>
 </div>
 
-<jsp:include page="footer.jsp"  flush="true"></jsp:include>
+<jsp:include page="footer.jsp" flush="true"></jsp:include>

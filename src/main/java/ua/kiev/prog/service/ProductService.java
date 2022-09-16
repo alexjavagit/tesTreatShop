@@ -4,8 +4,6 @@ package ua.kiev.prog.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import ua.kiev.prog.entity.Category;
-import ua.kiev.prog.entity.CategorySizes;
-import ua.kiev.prog.entity.CustomUser;
 import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.exception.ProductNotFoundException;
 
@@ -32,6 +30,7 @@ public interface ProductService {
     List<Product> getProducts();
 
     Product findByName(String name);
+
     Product findByNameAndNotId(String name, Long id);
 
     Product getById(Long id);
@@ -41,12 +40,12 @@ public interface ProductService {
     Product getProductDetails(Long id);
 
     Product addProduct(String name, Category category,
-                              String description, BigDecimal price,
-                              Integer discount);
-
-    boolean updateProduct(Long id, String name, Category category,
                        String description, BigDecimal price,
                        Integer discount);
+
+    boolean updateProduct(Long id, String name, Category category,
+                          String description, BigDecimal price,
+                          Integer discount);
 
     void deleteProduct(Long id) throws ProductNotFoundException;
 

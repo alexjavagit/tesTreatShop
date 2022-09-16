@@ -30,28 +30,28 @@ public class AdminUsersController {
     @GetMapping("/users")
     //@PreAuthorize("hasRole('ADMIN')")
     public String usersList(Model model,
-                               @RequestParam(value = "sortBy", required = false) String sortBy,
-                               @RequestParam(value = "order", required = false) String order,
-                               @RequestParam(value = "searchEmail", required = false) String searchEmail,
-                               @RequestParam(value = "searchLogin", required = false) String searchLogin,
-                               @RequestParam(value = "page", required = false) String page,
-                               @RequestParam(value = "size", required = false) String size
+                            @RequestParam(value = "sortBy", required = false) String sortBy,
+                            @RequestParam(value = "order", required = false) String order,
+                            @RequestParam(value = "searchEmail", required = false) String searchEmail,
+                            @RequestParam(value = "searchLogin", required = false) String searchLogin,
+                            @RequestParam(value = "page", required = false) String page,
+                            @RequestParam(value = "size", required = false) String size
     ) {
-        int ipage = (page == null) ? 0 : Integer.parseInt(page)-1;
+        int ipage = (page == null) ? 0 : Integer.parseInt(page) - 1;
         int isize = (size == null) ? 10 : Integer.parseInt(size);
         Sort.Direction direction = (order == null) ? Sort.Direction.ASC : ((order.equals("desc")) ? Sort.Direction.DESC : Sort.Direction.ASC);
-        String sSortBy = (sortBy == null) ? "id" : ((sortBy.equals("price") || sortBy.equals("name")) ? sortBy :  "id");
+        String sSortBy = (sortBy == null) ? "id" : ((sortBy.equals("price") || sortBy.equals("name")) ? sortBy : "id");
         Pageable pagingSort = PageRequest.of(ipage, isize, direction, sSortBy);
 
 
         Page<CustomUser> usersList;
-        if ((searchEmail != null && searchEmail.length()>0) && (searchLogin != null && searchLogin.length()>0)) {
+        if ((searchEmail != null && searchEmail.length() > 0) && (searchLogin != null && searchLogin.length() > 0)) {
 
             usersList = userService.findByEmailAndLogin(searchEmail, searchLogin, pagingSort);
-        } else if (searchEmail != null && searchEmail.length()>0) {
+        } else if (searchEmail != null && searchEmail.length() > 0) {
 
             usersList = userService.findByEmail(searchEmail, pagingSort);
-        } else if (searchLogin != null && searchLogin.length()>0) {
+        } else if (searchLogin != null && searchLogin.length() > 0) {
 
             usersList = userService.findByLogin(searchLogin, pagingSort);
         } else {
@@ -60,9 +60,9 @@ public class AdminUsersController {
         }
 
         model.addAttribute("users", usersList.getContent());
-        model.addAttribute("endpage",usersList.getTotalPages());
+        model.addAttribute("endpage", usersList.getTotalPages());
         model.addAttribute("startpage", 1);
-        model.addAttribute("currentPage", usersList.getNumber()+1);
+        model.addAttribute("currentPage", usersList.getNumber() + 1);
 
         return "users";
     }
@@ -104,7 +104,7 @@ public class AdminUsersController {
     @PostMapping("/users/new")
     public String saveUser(Model model,
                            @ModelAttribute("theUser") CustomUser theNewUser
-                           ) {
+    ) {
         System.out.println(theNewUser);
         int error = 0;
         CustomUser userExists = userService.findByEmail(theNewUser.getEmail());

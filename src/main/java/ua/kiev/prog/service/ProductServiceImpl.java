@@ -34,21 +34,21 @@ public class ProductServiceImpl implements ProductService {
 
         Page<Product> products = productRepository.findByCategoryAndName(searchCategory, searchName, pageable);
 
-        return  products;
+        return products;
     }
 
     @Transactional(readOnly = true)
-    public Page<Product> findByCategory(Long searchCategory,Pageable pageable) {
+    public Page<Product> findByCategory(Long searchCategory, Pageable pageable) {
         Page<Product> products = productRepository.findByCategory(searchCategory, pageable);
 
-        return  products;
+        return products;
     }
 
     @Transactional(readOnly = true)
     public Page<Product> findByName(String searchName, Pageable pageable) {
         Page<Product> products = productRepository.findByName(searchName, pageable);
 
-        return  products;
+        return products;
     }
 
 
@@ -95,7 +95,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional(readOnly = true)
-    public List<Product> findByDiscount() { return productRepository.findByDiscount();};
+    public List<Product> findByDiscount() {
+        return productRepository.findByDiscount();
+    }
+
+    ;
 
     @Transactional
     public Product addProduct(String name, Category category,
@@ -109,8 +113,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     public boolean updateProduct(Long id, String name, Category category,
-                          String description, BigDecimal price,
-                          Integer discount) {
+                                 String description, BigDecimal price,
+                                 Integer discount) {
         Product product = productRepository.getById(id);
         product.setName(name);
         product.setCategory(category);

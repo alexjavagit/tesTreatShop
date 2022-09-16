@@ -4,7 +4,6 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
@@ -63,32 +62,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             return 0;
     }
 
-    /**
-     * @return unmodifiable copy of the map
-     */
+
     @Override
     public Map<String, Integer> getProductsInCart() {
         return Collections.unmodifiableMap(products);
     }
 
-    /**
-     * Checkout will rollback if there is not enough of some product in stock
-     *
-     */
-    @Override
-    public void checkout() {
-        Product product;
-//        for (Map.Entry<Product, Integer> entry : products.entrySet()) {
-//            // Refresh quantity for every product before checking
-//            product = productRepository.findOne(entry.getKey().getId());
-//            if (product.getQuantity() < entry.getValue())
-//                throw new NotEnoughProductsInStockException(product);
-//            entry.getKey().setQuantity(product.getQuantity() - entry.getValue());
-//        }
-//        productRepository.save(products.keySet());
-//        productRepository.flush();
-//        products.clear();
-    }
 
     @Override
     public Integer getTotal() {

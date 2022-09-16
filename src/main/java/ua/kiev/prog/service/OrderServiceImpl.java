@@ -22,7 +22,9 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
-    public void deleteOrder(Order order) { orderRepository.delete(order); }
+    public void deleteOrder(Order order) {
+        orderRepository.delete(order);
+    }
 
     @Override
     public Page<Order> getAllOrders(Pageable pageable) {

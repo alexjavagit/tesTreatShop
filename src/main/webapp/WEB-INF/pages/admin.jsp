@@ -8,7 +8,7 @@
 <div align="center">
     <h1>Secret page for admins only!</h1>
 
-    <c:url value="/logout" var="logoutUrl" />
+    <c:url value="/logout" var="logoutUrl"/>
     <p>Click to logout: <a href="${logoutUrl}">LOGOUT</a></p>
 </div>
 </body>

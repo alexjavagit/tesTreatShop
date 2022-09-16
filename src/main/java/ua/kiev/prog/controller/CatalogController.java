@@ -30,7 +30,7 @@ public class CatalogController {
 
 
     @GetMapping("/")
-    public String list(Model model, Pageable pageable){
+    public String list(Model model, Pageable pageable) {
         Page<Product> list = productService.getAllProducts(pageable);
 
         model.addAttribute("products", list);
@@ -38,7 +38,7 @@ public class CatalogController {
     }
 
     @GetMapping("/search/")
-    public String searchResults(Model model, @RequestParam("search_for") String searchFor){
+    public String searchResults(Model model, @RequestParam("search_for") String searchFor) {
         List<Product> list = productService.getProductsBySearchTerm(searchFor);
 
         model.addAttribute("products", list);
@@ -46,7 +46,7 @@ public class CatalogController {
     }
 
     @GetMapping("/{categoryName}")
-    public String listByCategory(Model model, @PathVariable String categoryName){
+    public String listByCategory(Model model, @PathVariable String categoryName) {
         Category category = categoryService.findByShortName(categoryName);
         if (category == null) {
             return "redirect:/";
@@ -60,7 +60,7 @@ public class CatalogController {
     }
 
     @GetMapping("/sale")
-    public String listProductsOnSale(Model model){
+    public String listProductsOnSale(Model model) {
         List<Product> products = productService.findByDiscount();
 
         model.addAttribute("products", products);

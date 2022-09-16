@@ -19,7 +19,7 @@
                         <div class="tab-pane fade in active" id="tab-1">
                             <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
                                 <c:forEach items="${productImages}" var="image">
-                                    <img src="data:;base64,${image.image}" alt="${image.id}" title="${product.name}" />
+                                    <img src="data:;base64,${image.image}" alt="${image.id}" title="${product.name}"/>
                                 </c:forEach>
                             </div>
                         </div>
@@ -45,27 +45,30 @@
                     <h5 class="lh1em"> ${product.description}</h5>
 
                     <div class="gap"></div>
-                    <p id="message" style="display: none; color: red;">Please choose size to add product to shopping cart!</p>
-                    <p><div class="btn-group btn-group-select-num" data-toggle="buttons">
+                    <p id="message" style="display: none; color: red;">Please choose size to add product to shopping
+                        cart!</p>
+                    <p>
+                    <div class="btn-group btn-group-select-num" data-toggle="buttons">
                         <c:forEach items="${sizes}" var="size">
-                        <label class="btn btn-primary">
-                            <input type="radio" name="size" value="${size.size}" />${size.size}</label>
+                            <label class="btn btn-primary">
+                                <input type="radio" name="size" value="${size.size}"/>${size.size}</label>
                         </c:forEach>
-                    </div></p>
+                    </div>
+                    </p>
 
 
                     <div class="gap"></div>
                     <a href="#" class="btn btn-primary" onClick="javascript: add_to_cart()">Add to cart</a>
 
-                    </div>
                 </div>
-
             </div>
-        </div>
-        <div class="gap"></div>
 
+        </div>
     </div>
-    <div class="gap gap-small"></div>
+    <div class="gap"></div>
+
+</div>
+<div class="gap gap-small"></div>
 </div>
 
 <script>
@@ -79,12 +82,12 @@
             var formData = {}
             formData['id'] = product_id;
             formData['size'] = size;
-            console.log("id="+product_id+"   size="+size);
+            console.log("id=" + product_id + "   size=" + size);
             $.ajax({
-                url:'/shoppingCart/addProduct',
+                url: '/shoppingCart/addProduct',
                 contentType: "application/json; charset=utf-8",
-                data : JSON.stringify(formData),
-                dataType : 'json',
+                data: JSON.stringify(formData),
+                dataType: 'json',
                 type: "POST",
                 success: function (data) {
                     console.log(data);
@@ -100,4 +103,4 @@
         }
     }
 </script>
-<jsp:include page="footer.jsp"  flush="true"></jsp:include>
+<jsp:include page="footer.jsp" flush="true"></jsp:include>

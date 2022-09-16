@@ -82,7 +82,8 @@
                 <li id="totalli">
                     <div class="row">
                         <div class="col-md-8"></div>
-                        <div class="booking-item-title"><label style="font-weight: bold;font-size: large;">Total: $${total.intValue()}</label></div>
+                        <div class="booking-item-title"><label style="font-weight: bold;font-size: large;">Total:
+                            $${total.intValue()}</label></div>
                     </div>
                 </li>
 

@@ -19,13 +19,10 @@ import ua.kiev.prog.entity.CustomUser;
 import ua.kiev.prog.entity.Order;
 import ua.kiev.prog.entity.OrderStatus;
 import ua.kiev.prog.entity.POJO.DeleteOrder;
-import ua.kiev.prog.entity.POJO.DeleteProductModel;
 import ua.kiev.prog.entity.POJO.OrderData;
 import ua.kiev.prog.exception.OrderNotFoundException;
 import ua.kiev.prog.service.OrderService;
 import ua.kiev.prog.service.UserService;
-
-import java.util.Optional;
 
 
 @Controller

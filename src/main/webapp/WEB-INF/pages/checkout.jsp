@@ -53,7 +53,8 @@
             <ul class="booking-list">
                 <c:forEach items="${products.entrySet()}" var="product">
                     <c:if test="${product.getValue().discount > 0}">
-                        <c:set var="dPrice" value="${product.getValue().price - product.getValue().price*(product.getValue().discount/100)}"/>
+                        <c:set var="dPrice"
+                               value="${product.getValue().price - product.getValue().price*(product.getValue().discount/100)}"/>
                     </c:if>
                     <c:if test="${product.getValue().discount == 0}">
                         <c:set var="dPrice" value="${product.getValue().price}"/>
@@ -84,7 +85,7 @@
                                 $${dPrice.intValue()*productsQty.get(product.getKey())}</div>
                         </div>
                     </li>
-                    <c:set var = "total" value = "${total + dPrice.intValue()*productsQty.get(product.getKey())}"/>
+                    <c:set var="total" value="${total + dPrice.intValue()*productsQty.get(product.getKey())}"/>
                 </c:forEach>
                 <li id="totalli" <c:if test="${products.size() eq 0}">style="display: none"</c:if>>
                     <div class="row">

@@ -10,10 +10,8 @@ import ua.kiev.prog.entity.ProductImages;
 import ua.kiev.prog.repository.ProductImagesRepository;
 import ua.kiev.prog.repository.ProductRepository;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Base64;
 import java.util.List;
@@ -50,8 +48,7 @@ public class ProductImagesServiceImpl implements ProductImagesService {
     public void saveImage(String filepath, ProductImages productImages) {
         File file = new File(filepath);
         String fileName = StringUtils.cleanPath(file.getName());
-        if(fileName.contains(".."))
-        {
+        if (fileName.contains("..")) {
             System.out.println("not a a valid file");
         }
         try {
@@ -63,7 +60,7 @@ public class ProductImagesServiceImpl implements ProductImagesService {
 
     @Transactional
     public void saveUploadedImage(MultipartFile file, ProductImages productImages) {
-        byte [] byteArr= new byte[0];
+        byte[] byteArr = new byte[0];
         try {
             byteArr = file.getBytes();
         } catch (IOException e) {
@@ -81,17 +78,5 @@ public class ProductImagesServiceImpl implements ProductImagesService {
         }
     }
 
-//    public void saveImage(MultipartFile file) {
-//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-//        if(fileName.contains(".."))
-//        {
-//            System.out.println("not a a valid file");
-//        }
-//        try {
-//            p.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 }

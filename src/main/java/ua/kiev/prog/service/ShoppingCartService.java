@@ -2,7 +2,6 @@ package ua.kiev.prog.service;
 
 import ua.kiev.prog.entity.Product;
 
-import java.math.BigDecimal;
 import java.util.Map;
 
 public interface ShoppingCartService {
@@ -13,7 +12,7 @@ public interface ShoppingCartService {
 
     Map<String, Integer> getProductsInCart();
 
-    void checkout();
+   //void checkout();
 
     Integer getTotal();
 

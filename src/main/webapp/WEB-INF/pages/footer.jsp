@@ -1,10 +1,9 @@
-
 <footer id="main-footer">
     <div class="container">
         <div class="row row-wrap">
             <div class="col-md-3">
                 <a class="logo" href="/">
-                    <img src="/img/logo-invert2.png" alt="Treat Shoes Shop" title="Treat Shoes Shop" />
+                    <img src="/img/logo-invert2.png" alt="Treat Shoes Shop" title="Treat Shoes Shop"/>
                 </a>
                 <p class="mb20">Find your Best shoes Here!</p>
                 <ul class="list list-horizontal list-space">

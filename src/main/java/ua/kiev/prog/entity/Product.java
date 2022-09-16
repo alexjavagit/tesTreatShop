@@ -1,18 +1,13 @@
 package ua.kiev.prog.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CollectionType;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +19,7 @@ import java.util.List;
 @Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -39,7 +34,7 @@ public class Product {
 
     private BigDecimal price;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Integer discount = 0;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

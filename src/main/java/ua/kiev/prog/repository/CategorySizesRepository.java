@@ -11,9 +11,8 @@ import java.util.List;
 public interface CategorySizesRepository extends JpaRepository<CategorySizes, Long> {
     List<CategorySizes> findByCategory(@Param("category_id") Long category_id);
 
-    //@Query("select p from ProductSizes p where p.size =:size and p.category=:category")
     boolean existsBySizeAndCategory(@Param("size") String size, @Param("category") Category category);
 
     @Query("SELECT c FROM CategorySizes c WHERE c.category=:category")
-    public List<CategorySizes> getByCategory(Category category);
+    List<CategorySizes> getByCategory(Category category);
 }

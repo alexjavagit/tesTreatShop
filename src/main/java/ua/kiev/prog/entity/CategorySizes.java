@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Table(name = "category_sizes")
 public class CategorySizes {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

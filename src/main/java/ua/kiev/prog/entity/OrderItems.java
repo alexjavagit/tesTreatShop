@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Table(name = "orders_items")
 public class OrderItems {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

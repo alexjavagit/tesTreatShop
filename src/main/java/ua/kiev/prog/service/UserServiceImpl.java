@@ -7,12 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.prog.entity.CustomUser;
 import ua.kiev.prog.repository.UserRepository;
+
 import java.util.List;
 
 @Service
-public class UserServiceImpl  implements UserService {
+public class UserServiceImpl implements UserService {
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Transactional(readOnly = true)
     public List<CustomUser> getAllUsers() {
@@ -55,21 +56,21 @@ public class UserServiceImpl  implements UserService {
 
         Page<CustomUser> users = userRepository.findByEmailAndLogin(searchEmail, searchLogin, pageable);
 
-        return  users;
+        return users;
     }
 
     @Transactional(readOnly = true)
-    public Page<CustomUser> findByEmail(String searchEmail,Pageable pageable) {
+    public Page<CustomUser> findByEmail(String searchEmail, Pageable pageable) {
         Page<CustomUser> users = userRepository.findByEmail(searchEmail, pageable);
 
-        return  users;
+        return users;
     }
 
     @Transactional(readOnly = true)
     public Page<CustomUser> findByLogin(String searchLogin, Pageable pageable) {
         Page<CustomUser> users = userRepository.findByLogin(searchLogin, pageable);
 
-        return  users;
+        return users;
     }
 
     @Override
@@ -78,11 +79,6 @@ public class UserServiceImpl  implements UserService {
         return userRepository.findByLogin(login);
     }
 
-//    @Override
-//    @Transactional
-//    public void addUser(CustomUser customUser) {
-//        userRepository.save(customUser);
-//    }
 
     @Override
     @Transactional
@@ -96,43 +92,4 @@ public class UserServiceImpl  implements UserService {
         userRepository.deleteById(id);
     }
 
-//    @Transactional
-//    public void deleteUsers(List<Long> ids) {
-//        ids.forEach(id -> {
-//            Optional<CustomUser> user = userRepository.findById(id);
-//            user.ifPresent(u -> {
-//                if ( ! AppConfig.ADMIN.equals(u.getLogin()) && ! AppConfig.MODERATOR.equals(u.getLogin())) {
-//                    userRepository.deleteById(u.getId());
-//                }
-//            });
-//        });
-//    }
-
-
-//    @Transactional
-//    public boolean addUser(String login, String passHash,
-//                           String firstName, String lastName,
-//                           UserRole role, String email,
-//                           String phone,
-//                           String address) {
-//        if (userRepository.existsByLogin(login))
-//            return false;
-//
-//        CustomUser customUser = new CustomUser(login, passHash, firstName, lastName, role, email, phone, address);
-//        userRepository.save(customUser);
-//
-//        return true;
-//    }
-
-//    @Transactional
-//    public void updateUser(String login, String email, String phone) {
-//        CustomUser customUser = userRepository.findByLogin(login);
-//        if (customUser == null)
-//            return;
-//
-//        customUser.setEmail(email);
-//        customUser.setPhone(phone);
-//
-//        userRepository.save(customUser);
-//    }
 }

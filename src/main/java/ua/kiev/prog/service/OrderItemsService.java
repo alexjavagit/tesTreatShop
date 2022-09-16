@@ -4,6 +4,6 @@ import ua.kiev.prog.entity.OrderItems;
 
 public interface OrderItemsService {
 
-    public void saveOrder(OrderItems orderItems);
+    void saveOrder(OrderItems orderItems);
 
 }

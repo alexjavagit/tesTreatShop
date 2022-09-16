@@ -29,15 +29,15 @@ public class AdminCategoriesController {
                                  @RequestParam(value = "page", required = false) String page,
                                  @RequestParam(value = "size", required = false) String size
     ) {
-        int ipage = (page == null) ? 0 : Integer.parseInt(page)-1;
+        int ipage = (page == null) ? 0 : Integer.parseInt(page) - 1;
         int isize = (size == null) ? 10 : Integer.parseInt(size);
         Sort.Direction direction = (order == null) ? Sort.Direction.ASC : ((order.equals("desc")) ? Sort.Direction.DESC : Sort.Direction.ASC);
-        String sSortBy = (sortBy == null) ? "id" : ((sortBy.equals("price") || sortBy.equals("name")) ? sortBy :  "id");
+        String sSortBy = (sortBy == null) ? "id" : ((sortBy.equals("price") || sortBy.equals("name")) ? sortBy : "id");
         Pageable pagingSort = PageRequest.of(ipage, isize, direction, sSortBy);
 
 
         Page<Category> categoryList;
-        if (searchName != null && searchName.length()>0) {
+        if (searchName != null && searchName.length() > 0) {
 
             categoryList = categoryService.findByName(searchName, pagingSort);
         } else {
@@ -48,7 +48,7 @@ public class AdminCategoriesController {
         model.addAttribute("categories", categoryList.getContent());
         model.addAttribute("endpage", categoryList.getTotalPages());
         model.addAttribute("startpage", 1);
-        model.addAttribute("currentPage", categoryList.getNumber()+1);
+        model.addAttribute("currentPage", categoryList.getNumber() + 1);
 
         return "categories";
     }
@@ -83,7 +83,7 @@ public class AdminCategoriesController {
 
     @PostMapping("/categories/new")
     public String saveCategory(Model model,
-                           @ModelAttribute("theCategory") Category theCategory
+                               @ModelAttribute("theCategory") Category theCategory
     ) {
         int error = 0;
         Category categoryExists = categoryService.findByName(theCategory.getName());
@@ -108,7 +108,7 @@ public class AdminCategoriesController {
 
     @PostMapping("/categories/update")
     public String updateCategory(Model model,
-                             @ModelAttribute("theCategory") Category theCategory) {
+                                 @ModelAttribute("theCategory") Category theCategory) {
 
         int error = 0;
         Category categoryExists = categoryService.findByNameAndNotId(theCategory.getName(), theCategory.getId());

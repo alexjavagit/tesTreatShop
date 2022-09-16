@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.prog.entity.Category;
 
-import ua.kiev.prog.entity.CustomUser;
 import ua.kiev.prog.repository.CategoryRepository;
 
 
@@ -30,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public Page<Category> findByName(String searchName, Pageable pageable) {
         Page<Category> categories = categoryRepository.findByName(searchName, pageable);
-        return  categories;
+        return categories;
     }
 
     @Transactional(readOnly = true)

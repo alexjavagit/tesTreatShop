@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +33,7 @@ public class MyController {
     @GetMapping("/")
     public String index(Model model) {
         List<Product> list = productService.getNewProducts();
-        model.addAttribute("products", list.subList(0,4));
+        model.addAttribute("products", list.subList(0, 4));
 
         String login = "";
         String role = "";
@@ -74,75 +73,16 @@ public class MyController {
     }
 
 
-
-//    @PostMapping(value = "/update")
-//    public String update(@RequestParam(required = false) String email,
-//                         @RequestParam(required = false) String phone) {
-//        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String login = user.getUsername();
-//
-//        userService.updateUser(login, email, phone);
-//
-//        return "redirect:/";
-//    }
-
-//    @PostMapping(value = "/newuser")
-//    public String update(@RequestParam String login,
-//                         @RequestParam String password,
-//                         @RequestParam String firstName,
-//                         @RequestParam String lastName,
-//                         @RequestParam(required = false) String email,
-//                         @RequestParam(required = false) String phone,
-//                         @RequestParam(required = false) String address,
-//                         Model model) {
-//        String passHash = passwordEncoder.encode(password);
-//
-//        if ( ! userService.addUser(login, passHash, firstName, lastName, UserRole.USER, email, phone, address)) {
-//            model.addAttribute("exists", true);
-//            model.addAttribute("login", login);
-//            return "register";
-//        }
-//
-//        return "redirect:/";
-//    }
-
-//    @PostMapping(value = "/delete")
-//    public String delete(@RequestParam(name = "toDelete[]", required = false) List<Long> ids,
-//                         Model model) {
-//        userService.deleteUsers(ids);
-//        model.addAttribute("users", userService.getAllUsers());
-//
-//        return "admin";
-//    }
-
     @GetMapping("/login")
     public String loginPage() {
         System.out.println("LoginPage");
         return "login";
     }
 
-//    @GetMapping("/register")
-//    public String register() {
-//        return "register";
-//    }
-
-//    @GetMapping("/admin")
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-//    public String admin(Model model) {
-//        model.addAttribute("users", userService.getAllUsers());
-//        return "admin";
-//    }
-
-//    @GetMapping("/moderator")
-//    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-//    public String moderator(Model model) {
-//        model.addAttribute("users", userService.getAllUsers());
-//        return "moderator";
-//    }
 
     @GetMapping("/unauthorized")
-    public String unauthorized(Model model){
-        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String unauthorized(Model model) {
+        org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("login", user.getUsername());
         return "unauthorized";
     }

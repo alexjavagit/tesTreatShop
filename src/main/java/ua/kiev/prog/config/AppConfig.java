@@ -27,7 +27,7 @@ public class AppConfig extends GlobalMethodSecurityConfiguration {
     CategoryRepository categoryRepository;
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }
 

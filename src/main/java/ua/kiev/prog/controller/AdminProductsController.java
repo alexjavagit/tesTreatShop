@@ -187,7 +187,6 @@ public class AdminProductsController {
 
         product.setProductImages(listProductImages);
 
-        //return new ResponseEntity<String>(productImages.getId().toString(), HttpStatus.OK);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         String message = "{\"id\" : \"" + productImages.getId() + "\"}";

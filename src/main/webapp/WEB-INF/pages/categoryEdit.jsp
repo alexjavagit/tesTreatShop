@@ -1,4 +1,4 @@
-<jsp:include page="header.jsp"  flush="true"></jsp:include>
+<jsp:include page="header.jsp" flush="true"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
@@ -15,11 +15,12 @@
                         <p style="color: red">${errorMessage}</p>
                         <div class="form-group form-group-icon-left"><i class="fa fa-user input-icon"></i>
                             <label>Name</label>
-                            <input class="form-control" name="name" value="${theCategory.name}" type="text" required />
+                            <input class="form-control" name="name" value="${theCategory.name}" type="text" required/>
                         </div>
                         <div class="form-group form-group-icon-left"><i class="fa fa-user input-icon"></i>
                             <label>Short Name</label>
-                            <input class="form-control" name="shortName" value="${theCategory.shortName}" type="text" required pattern="[a-zA-Z0-9\_]{1,50}"  />
+                            <input class="form-control" name="shortName" value="${theCategory.shortName}" type="text"
+                                   required pattern="[a-zA-Z0-9\_]{1,50}"/>
                         </div>
                         <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon"></i>
                             <label>Description</label>
@@ -40,4 +41,4 @@
 </div>
 
 
-<jsp:include page="footer.jsp"  flush="true"></jsp:include>
+<jsp:include page="footer.jsp" flush="true"></jsp:include>
