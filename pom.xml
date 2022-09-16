@@ -75,6 +75,13 @@
             <version>5.7.3</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>7.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -89,17 +96,6 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.heroku.sdk</groupId>
-                <artifactId>heroku-maven-plugin</artifactId>
-                <version>3.0.3</version>
-                <configuration>
-                    <appName>spring-boot-shoes-shop</appName>
-                    <processTypes>
-                        <web>java $JAVA_OPTS -cp target/classes:target/dependency/* Application</web>
-                    </processTypes>
                 </configuration>
             </plugin>
         </plugins>
