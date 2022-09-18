@@ -127,8 +127,8 @@ public class ShoppingCartController {
             dbCustomUser = userService.findByLogin(login);
         }
 
-        Order order = new Order(email, firstName, lastName, phone, shippingAddress, OrderStatus.NEW, dbCustomUser, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
-        orderService.saveOrder(order);
+        ShopOrder shopOrder = new ShopOrder(email, firstName, lastName, phone, shippingAddress, OrderStatus.NEW, dbCustomUser, new Date(System.currentTimeMillis()), new Date(System.currentTimeMillis()));
+        orderService.saveOrder(shopOrder);
 
         Map<String, Integer> productsQty = shoppingCartService.getProductsInCart();
         BigDecimal total = BigDecimal.ZERO;
@@ -143,17 +143,17 @@ public class ShoppingCartController {
                 } else {
                     dPrice = product.getPrice();
                 }
-                OrderItems orderItem = new OrderItems(order, product, new BigDecimal(entry.getValue()), dPrice.setScale(0, RoundingMode.DOWN), parts[1]);
+                OrderItems orderItem = new OrderItems(shopOrder, product, new BigDecimal(entry.getValue()), dPrice.setScale(0, RoundingMode.DOWN), parts[1]);
                 orderItemsService.saveOrder(orderItem);
                 total = total.add(dPrice.multiply(new BigDecimal(entry.getValue())));
             }
         }
-        order.setTotal(total);
+        shopOrder.setTotal(total);
 
         //clear shopping cart
         shoppingCartService.clearCart();
 
-        model.addAttribute("orderId", order.getId());
+        model.addAttribute("orderId", shopOrder.getId());
         model.addAttribute("cartCount", 0);
         return "orderDone";
     }

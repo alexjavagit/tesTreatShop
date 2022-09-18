@@ -2,32 +2,32 @@ package ua.kiev.prog.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import ua.kiev.prog.entity.Order;
+import ua.kiev.prog.entity.ShopOrder;
 
 
 public interface OrderService {
 
-    void saveOrder(Order order);
+    void saveOrder(ShopOrder shopOrder);
 
-    void deleteOrder(Order order);
+    void deleteOrder(ShopOrder shopOrder);
 
-    Page<Order> getAllOrders(Pageable pageable);
+    Page<ShopOrder> getAllOrders(Pageable pageable);
 
-    Order findOrderById(Long orderId);
+    ShopOrder findOrderById(Long orderId);
 
-    Page<Order> findByOrderId(Long orderId, Pageable pageable);
+    Page<ShopOrder> findByOrderId(Long orderId, Pageable pageable);
 
-    Page<Order> findByName(String searchName, Pageable pageable);
+    Page<ShopOrder> findByName(String searchName, Pageable pageable);
 
-    Page<Order> findByEmail(String searchEmail, Pageable pageable);
+    Page<ShopOrder> findByEmail(String searchEmail, Pageable pageable);
 
-    Page<Order> findByOrderIdAndName(Long searchId, String searchName, Pageable pageable);
+    Page<ShopOrder> findByOrderIdAndName(Long searchId, String searchName, Pageable pageable);
 
-    Page<Order> findByOrderIdAndEmail(Long searchId, String searchEmail, Pageable pageable);
+    Page<ShopOrder> findByOrderIdAndEmail(Long searchId, String searchEmail, Pageable pageable);
 
-    Page<Order> findByNameAndEmail(String searchName, String searchEmail, Pageable pageable);
+    Page<ShopOrder> findByNameAndEmail(String searchName, String searchEmail, Pageable pageable);
 
-    Page<Order> findByOrderIdAndNameAndEmail(Long searchId, String searchName, String searchEmail, Pageable pageable);
+    Page<ShopOrder> findByOrderIdAndNameAndEmail(Long searchId, String searchName, String searchEmail, Pageable pageable);
 
-    Page<Order> findByUserId(Long userId, Pageable pageable);
+    Page<ShopOrder> findByUserId(Long userId, Pageable pageable);
 }

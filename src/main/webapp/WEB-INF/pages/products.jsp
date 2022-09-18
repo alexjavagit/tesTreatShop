@@ -6,7 +6,7 @@
     <h3 class="booking-title">Products</h3>
     <form class="booking-item-dates-change mb30">
         <input type="hidden" name="sortBy" value=""/>
-        <input type="hidden" name="order" value=""/>
+        <input type="hidden" name="shopOrder" value=""/>
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group form-group-icon-left"><i
@@ -41,7 +41,7 @@
                     <div class="btn-group btn-group-select-num" data-toggle="buttons">
                         <c:forEach begin="${startpage}" end="${endpage}" var="p">
                             <label class="btn btn-primary <c:if test="${currentPage == p}">active</c:if>"
-                                   onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=${param.sortBy}&order=${param.order}&page=${p}';">
+                                   onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=${param.sortBy}&shopOrder=${param.shopOrder}&page=${p}';">
                                 <input type="radio" name="options"/>${p}</label>
                         </c:forEach>
                     </div>
@@ -56,13 +56,13 @@
                         <a href="#">
                             Sort:
                             <c:choose>
-                                <c:when test="${param.sortBy=='price' && param.order=='desc'}">
+                                <c:when test="${param.sortBy=='price' && param.shopOrder=='desc'}">
                                     Price (high to low)
                                 </c:when>
-                                <c:when test="${param.sortBy=='price' && param.order=='asc'}">
+                                <c:when test="${param.sortBy=='price' && param.shopOrder=='asc'}">
                                     Price (low to high)
                                 </c:when>
-                                <c:when test="${param.sortBy=='name' && param.order=='asc'}">
+                                <c:when test="${param.sortBy=='name' && param.shopOrder=='asc'}">
                                     Name
                                 </c:when>
                                 <c:otherwise>
@@ -73,16 +73,16 @@
                             <i class="fa fa-angle-up"></i>
                         </a></h5>
                     <ul class="nav-drop-menu">
-                        <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=id&order=desc';">
+                        <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=id&shopOrder=desc';">
                             <a href="">Id (high to low)</a>
                         </li>
-                        <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=price&order=desc';">
+                        <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=price&shopOrder=desc';">
                             <a href="">Price (high to low)</a>
                         </li>
-                        <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=price&order=asc';">
+                        <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=price&shopOrder=asc';">
                             <a href="#">Price (low to high)</a>
                         </li>
-                        <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=name&order=asc';">
+                        <li onClick="window.location='/admin/products?searchCategory=${param.searchCategory}&searchName=${param.searchName}&sortBy=name&shopOrder=asc';">
                             <a href="#">Name</a>
                         </li>
                     </ul>

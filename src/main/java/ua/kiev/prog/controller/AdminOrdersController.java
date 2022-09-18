@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.kiev.prog.entity.CustomUser;
-import ua.kiev.prog.entity.Order;
+import ua.kiev.prog.entity.ShopOrder;
 import ua.kiev.prog.entity.OrderStatus;
 import ua.kiev.prog.entity.POJO.DeleteOrder;
 import ua.kiev.prog.entity.POJO.OrderData;
@@ -80,7 +80,7 @@ public class AdminOrdersController {
         Pageable pagingSort = PageRequest.of(ipage, isize, direction, sSortBy);
         System.out.println(pagingSort);
 
-        Page<Order> orderList;
+        Page<ShopOrder> orderList;
         Long lSearchId = 0L;
         try {
             lSearchId = (searchId == null) ? 0L : Long.parseLong(searchId);
@@ -125,9 +125,9 @@ public class AdminOrdersController {
     @GetMapping("/orders/view/{id}")
     public String ordersList(Model model,
                              @PathVariable Long id) throws OrderNotFoundException {
-        Order order = orderService.findOrderById(id);
+        ShopOrder shopOrder = orderService.findOrderById(id);
 
-        model.addAttribute("order", order);
+        model.addAttribute("order", shopOrder);
         model.addAttribute("orderStatuses", OrderStatus.values());
         return "order_view";
 
@@ -135,11 +135,11 @@ public class AdminOrdersController {
 
     @PostMapping("/orders/changeStatus")
     public ResponseEntity<?> updateOrderStatus(@RequestBody OrderData orderData) {
-        Order order = orderService.findOrderById(orderData.getId());
+        ShopOrder shopOrder = orderService.findOrderById(orderData.getId());
 
         OrderStatus status = OrderStatus.valueOf(orderData.getStatus());
-        order.setStatus(status);
-        orderService.saveOrder(order);
+        shopOrder.setStatus(status);
+        orderService.saveOrder(shopOrder);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
@@ -149,8 +149,8 @@ public class AdminOrdersController {
 
     @PostMapping("/orders/delete")
     public ResponseEntity<?> deleteOrder(@RequestBody DeleteOrder deleteOrder) {
-        Order order = orderService.findOrderById(deleteOrder.getId());
-        orderService.deleteOrder(order);
+        ShopOrder shopOrder = orderService.findOrderById(deleteOrder.getId());
+        orderService.deleteOrder(shopOrder);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
@@ -179,7 +179,7 @@ public class AdminOrdersController {
         Pageable pagingSort = PageRequest.of(ipage, isize, direction, sSortBy);
 
 
-        Page<Order> orderList;
+        Page<ShopOrder> orderList;
         orderList = orderService.findByUserId(id, pagingSort);
 
 

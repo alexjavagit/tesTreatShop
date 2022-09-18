@@ -8,7 +8,7 @@
 
     <form class="booking-item-dates-change mb30">
         <input type="hidden" name="sortBy" value=""/>
-        <input type="hidden" name="order" value=""/>
+        <input type="hidden" name="shopOrder" value=""/>
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group form-group-icon-left"><i
@@ -45,7 +45,7 @@
                     <div class="btn-group btn-group-select-num" data-toggle="buttons">
                         <c:forEach begin="${startpage}" end="${endpage}" var="p">
                             <label class="btn btn-primary <c:if test="${currentPage == p}">active</c:if>"
-                                   onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=${param.sortBy}&order=${param.order}&page=${p}';">
+                                   onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=${param.sortBy}&shopOrder=${param.shopOrder}&page=${p}';">
                                 <input type="radio" name="options"/>${p}</label>
                         </c:forEach>
                     </div>
@@ -58,19 +58,19 @@
         <div class="col-md-12">
             <div class="nav-drop booking-sort">
                 <h5 class="booking-sort-title"><a href="#">Sort: <c:choose>
-                    <c:when test="${param.sortBy=='id' && param.order=='asc'}">
+                    <c:when test="${param.sortBy=='id' && param.shopOrder=='asc'}">
                         Id (low to high)
                     </c:when>
-                    <c:when test="${param.sortBy=='name' && param.order=='asc'}">
+                    <c:when test="${param.sortBy=='name' && param.shopOrder=='asc'}">
                         Name (low to high)
                     </c:when>
-                    <c:when test="${param.sortBy=='name' && param.order=='desc'}">
+                    <c:when test="${param.sortBy=='name' && param.shopOrder=='desc'}">
                         Name (high to low)
                     </c:when>
-                    <c:when test="${param.sortBy=='total' && param.order=='asc'}">
+                    <c:when test="${param.sortBy=='total' && param.shopOrder=='asc'}">
                         Total (low to high)
                     </c:when>
-                    <c:when test="${param.sortBy=='total' && param.order=='desc'}">
+                    <c:when test="${param.sortBy=='total' && param.shopOrder=='desc'}">
                         Total (high to low)
                     </c:when>
                     <c:otherwise>
@@ -81,52 +81,52 @@
                     <i class="fa fa-angle-up"></i>
                 </a></h5>
                 <ul class="nav-drop-menu">
-                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=id&order=asc';">
+                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=id&shopOrder=asc';">
                         <a href="">Id (low to high)</a>
                     </li>
-                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=name&order=asc';">
+                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=name&shopOrder=asc';">
                         <a href="">Name (low to high)</a>
                     </li>
-                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=name&order=desc';">
+                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=name&shopOrder=desc';">
                         <a href="#">Name (high to low)</a>
                     </li>
-                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=total&order=asc';">
+                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=total&shopOrder=asc';">
                         <a href="#">Total (low to high)</a>
-                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=total&order=desc';">
+                    <li onClick="window.location='/admin/orders?searchId=${searchId}&searchName=${searchName}&searchEmail=${searchEmail}&sortBy=total&shopOrder=desc';">
                         <a href="#">Total (high to low)</a>
                     </li>
                 </ul>
             </div>
             <ul class="booking-list">
                 <c:if test="${empty orders}">
-                    We have not found any order yet. Please try again.
+                    We have not found any shopOrder yet. Please try again.
                 </c:if>
-                <c:forEach items="${orders}" var="order">
-                    <li id="li${order.id}">
+                <c:forEach items="${orders}" var="shopOrder">
+                    <li id="li${shopOrder.id}">
                         <div class="booking-item-container">
                             <div class="booking-item">
                                 <div class="row">
-                                    <div class="col-md-1">${order.id}</div>
+                                    <div class="col-md-1">${shopOrder.id}</div>
                                     <div class="col-md-3">
-                                            ${order.firstName} ${order.lastName}
+                                            ${shopOrder.firstName} ${shopOrder.lastName}
                                     </div>
                                     <div class="col-md-2" nowrap>
-                                        <i class="fa fa-phone"></i>&nbsp;${order.phone}<br/>
-                                        <i class="fa fa-envelope"></i>&nbsp;${order.email}
+                                        <i class="fa fa-phone"></i>&nbsp;${shopOrder.phone}<br/>
+                                        <i class="fa fa-envelope"></i>&nbsp;${shopOrder.email}
                                     </div>
                                     <div class="col-md-1">
-                                        $${order.total}
+                                        $${shopOrder.total}
                                     </div>
                                     <div class="col-md-1">
-                                        <fmt:formatDate pattern="MM/dd/yyyy" value="${order.dateAdded}"/>
+                                        <fmt:formatDate pattern="MM/dd/yyyy" value="${shopOrder.dateAdded}"/>
                                     </div>
                                     <div class="col-md-1">
-                                            ${order.status}
+                                            ${shopOrder.status}
                                     </div>
                                     <div class="col-md-2">
-                                        <a class="btn btn-primary" href="/admin/orders/view/${order.id}">View</a>&nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-primary" href="/admin/orders/view/${shopOrder.id}">View</a>&nbsp;&nbsp;&nbsp;
                                         <a class="btn btn-primary" href="#"
-                                           onClick="javascript: if (confirm('Are you sure you want to delete this order?')) delete_order(${order.id});">Delete</a>
+                                           onClick="javascript: if (confirm('Are you sure you want to delete this shopOrder?')) delete_order(${shopOrder.id});">Delete</a>
                                     </div>
                                 </div>
                             </div>

@@ -18,7 +18,7 @@ public class OrderItems {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
-    private Order order;
+    private ShopOrder shopOrder;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
@@ -29,8 +29,8 @@ public class OrderItems {
 
     private String size;
 
-    public OrderItems(Order order, Product product, BigDecimal qty, BigDecimal price, String size) {
-        this.order = order;
+    public OrderItems(ShopOrder shopOrder, Product product, BigDecimal qty, BigDecimal price, String size) {
+        this.shopOrder = shopOrder;
         this.product = product;
         this.qty = qty;
         this.price = price;

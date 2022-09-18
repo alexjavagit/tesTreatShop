@@ -42,7 +42,7 @@ public class CustomUser {
     private LocalDateTime dateAdded;
 
     @OneToMany(mappedBy = "customUser", cascade = CascadeType.ALL)
-    private List<Order> orderList;
+    private List<ShopOrder> shopOrderList;
 
     public CustomUser(String login, String password, String firstName, String lastName, UserRole role, String email, String phone, String address) {
         this.login = login;

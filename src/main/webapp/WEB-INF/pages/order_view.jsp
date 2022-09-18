@@ -10,13 +10,13 @@
     </ul>
     <div id="message" style="color: navy!important;"></div>
     <form method="post" action="" id="formStatus">
-        <input type="hidden" name="id" value="${order.id}"/>
-        <h3 class="booking-title">Order # ${order.id}</h3>
+        <input type="hidden" name="id" value="${shopOrder.id}"/>
+        <h3 class="booking-title">Order # ${shopOrder.id}</h3>
         <div style="margin-bottom: 20px;"><label style="font-weight: bold;font-size: large;">Status : <select
                 name="order_status" id="order_status">
             <c:forEach items="${orderStatuses}" var="orderStatus">
                 <option value="${orderStatus.name()}"
-                        <c:if test="${order.status == orderStatus.name()}">Selected</c:if>>${orderStatus.name()}</option>
+                        <c:if test="${shopOrder.status == orderStatus.name()}">Selected</c:if>>${orderStatus.name()}</option>
             </c:forEach>
         </select>
             <input class="btn btn-primary" type="submit" value=" CHANGE "/>
@@ -27,30 +27,30 @@
         <div class="col-md-5">
             <div class="form-group form-group-icon-left"><i class="fa fa-customUser input-icon input-icon-show"></i>
                 <label style="font-weight: bold;font-size: large;">Shipping address: </label>
-                ${order.shippingAddress}
+                ${shopOrder.shippingAddress}
             </div>
             <div class="form-group form-group-icon-left"><i class="fa fa-customUser input-icon input-icon-show"></i>
                 <label style="font-weight: bold;font-size: large;">First Name: </label>
-                ${order.firstName}
+                ${shopOrder.firstName}
             </div>
             <div class="form-group form-group-icon-left"><i class="fa fa-customUser input-icon input-icon-show"></i>
                 <label style="font-weight: bold;font-size: large;">Last Name: </label>
-                ${order.lastName}
+                ${shopOrder.lastName}
             </div>
             <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon input-icon-show"></i>
                 <label style="font-weight: bold;font-size: large;">Email: </label>
-                ${order.email}
+                ${shopOrder.email}
             </div>
             <div class="form-group form-group-icon-left"><i class="fa fa-envelope input-icon input-icon-show"></i>
                 <label style="font-weight: bold;font-size: large;">Phone: </label>
-                ${order.phone}
+                ${shopOrder.phone}
             </div>
 
         </div>
         <div class="col-md-4">
 
             <ul class="booking-list">
-                <c:forEach items="${order.orderItems}" var="orderItem">
+                <c:forEach items="${shopOrder.orderItems}" var="orderItem">
                     <li id="li_${orderItem.id}">
                         <div class="row">
                             <div class="col-md-3">
@@ -88,10 +88,10 @@
                 </li>
 
             </ul>
-            <c:if test="${order.orderItems.size() eq 0}">
+            <c:if test="${shopOrder.orderItems.size() eq 0}">
                 <div class="row" id="cart_empty">
                     <div class="col-md-6 text-center">
-                        <p>Empty order...</p>
+                        <p>Empty shopOrder...</p>
                     </div>
                 </div>
             </c:if>

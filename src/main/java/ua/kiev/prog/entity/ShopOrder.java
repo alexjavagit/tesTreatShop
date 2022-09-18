@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "orders")
-public class Order {
+public class ShopOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -57,9 +57,9 @@ public class Order {
     @Column(name = "total")
     private BigDecimal total;
 
-    public Order(String email, String firstName, String lastName, String phone,
-                 String shippingAddress, OrderStatus status,
-                 CustomUser customUser, Date dateAdded, Date updated) {
+    public ShopOrder(String email, String firstName, String lastName, String phone,
+                     String shippingAddress, OrderStatus status,
+                     CustomUser customUser, Date dateAdded, Date updated) {
         this.customUser = customUser;
         this.status = status;
         this.shippingAddress = shippingAddress;
