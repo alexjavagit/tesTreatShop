@@ -21,7 +21,6 @@ import java.util.List;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AppConfig extends GlobalMethodSecurityConfiguration {
 
-    public static final String ADMIN = "admin";
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -44,7 +43,7 @@ public class AppConfig extends GlobalMethodSecurityConfiguration {
 
             @Override
             public void run(String... strings) throws Exception {
-                CustomUser customUser = new CustomUser(ADMIN, encoder.encode("password"), UserRole.ADMIN);
+                CustomUser customUser = new CustomUser("admin", encoder.encode("password"), UserRole.ADMIN);
                 userService.updateUser(customUser);
 
 
