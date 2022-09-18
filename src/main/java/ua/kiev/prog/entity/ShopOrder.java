@@ -50,7 +50,7 @@ public class ShopOrder {
     @Column(name = "phone")
     private String phone;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "shopOrder", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<OrderItems> orderItems = new ArrayList<>();
 

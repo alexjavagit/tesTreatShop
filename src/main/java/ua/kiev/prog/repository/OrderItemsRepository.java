@@ -7,6 +7,6 @@ import ua.kiev.prog.entity.OrderItems;
 import java.util.List;
 
 public interface OrderItemsRepository extends JpaRepository<OrderItems, Long> {
-    @Query("SELECT o FROM OrderItems o WHERE o.order.id=:id")
+    @Query("SELECT o FROM OrderItems o WHERE o.shopOrder.id=:id")
     List<OrderItems> findByOrderId(Long id);
 }
