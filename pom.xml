@@ -98,6 +98,7 @@
                 <directory>src/main/webapp</directory>
             </resource>
         </resources>
+        <finalName>shop</finalName>
     </build>
 
 </project>
