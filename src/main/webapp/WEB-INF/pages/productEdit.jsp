@@ -58,7 +58,7 @@
                                 <div id="div${image.id}" class="col-md-4" style="padding: 4px!important">
                                     <div class="thumb">
                                         <a class="hover-img" href="#">
-                                            <img src="data:;base64,${image.image}" alt="${image.id}"
+                                            <img src="data:;base64,${image.base64Image}" alt="${image.id}"
                                                  style="width: 182px; height: 140px;"/>
                                             <div class="hover-inner hover-inner-block hover-inner-bottom hover-inner-bg-black hover-inner-sm hover-hold">
                                                 <div class="text-small">

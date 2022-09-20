@@ -100,7 +100,7 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <div class="booking-item-airline-logo">
-                                                <img src="data:;base64,${product.productImages[0].image}"
+                                                <img src="data:;base64,${product.productImages[0].base64Image}"
                                                      alt="${product.name}" title="${product.name}"/>
                                             </div>
                                         </div>

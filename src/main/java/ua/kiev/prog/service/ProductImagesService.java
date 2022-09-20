@@ -1,6 +1,7 @@
 package ua.kiev.prog.service;
 
 import org.springframework.web.multipart.MultipartFile;
+import ua.kiev.prog.entity.Product;
 import ua.kiev.prog.entity.ProductImages;
 
 import java.util.List;

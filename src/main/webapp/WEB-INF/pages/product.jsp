@@ -19,7 +19,7 @@
                         <div class="tab-pane fade in active" id="tab-1">
                             <div class="fotorama" data-allowfullscreen="true" data-nav="thumbs">
                                 <c:forEach items="${productImages}" var="image">
-                                    <img src="data:;base64,${image.image}" alt="${image.id}" title="${product.name}"/>
+                                    <img src="data:;base64,${image.base64Image}" alt="${image.id}" title="${product.name}"/>
                                 </c:forEach>
                             </div>
                         </div>

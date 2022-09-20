@@ -74,8 +74,6 @@
             <artifactId>spring-security-taglibs</artifactId>
             <version>5.7.3</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -84,31 +82,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <artifactId>webapp-runner</artifactId>
-                                    <version>8.0.24.0</version>
-                                    <destFileName>webapp-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
         <resources>
             <resource>
                 <directory>src/main/webapp</directory>
             </resource>
         </resources>
-        <finalName>shop</finalName>
     </build>
-
 </project>

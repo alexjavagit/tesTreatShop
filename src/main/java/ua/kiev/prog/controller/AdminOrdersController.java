@@ -126,8 +126,8 @@ public class AdminOrdersController {
     public String ordersList(Model model,
                              @PathVariable Long id) throws OrderNotFoundException {
         ShopOrder shopOrder = orderService.findOrderById(id);
-
-        model.addAttribute("order", shopOrder);
+        System.out.println(shopOrder);
+        model.addAttribute("shopOrder", shopOrder);
         model.addAttribute("orderStatuses", OrderStatus.values());
         return "order_view";
 

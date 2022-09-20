@@ -31,6 +31,7 @@ public class CatalogController {
 
     @GetMapping("/")
     public String list(Model model, Pageable pageable) {
+        //System.out.println("Catalog");
         Page<Product> list = productService.getAllProducts(pageable);
 
         model.addAttribute("products", list);

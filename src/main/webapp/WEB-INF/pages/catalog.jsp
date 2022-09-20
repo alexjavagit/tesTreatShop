@@ -29,7 +29,7 @@
                 <div class="thumb">
                     <header class="thumb-header">
                         <a class="hover-img" href="/product/${product.id}">
-                            <img src="data:;base64,${product.productImages[0].image}" alt="${product.name}"
+                            <img src="data:;base64,${product.productImages[0].base64Image}" alt="${product.name}"
                                  title="${product.name}"/>
                         </a>
                     </header>

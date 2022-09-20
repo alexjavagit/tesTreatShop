@@ -1,5 +1,6 @@
 package ua.kiev.prog.service;
 
+import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.kiev.prog.entity.Category;
 import ua.kiev.prog.entity.Product;
+import ua.kiev.prog.entity.ProductImages;
 import ua.kiev.prog.exception.ProductNotFoundException;
 import ua.kiev.prog.repository.ProductRepository;
 
@@ -60,12 +62,24 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(readOnly = true)
     public List<Product> getNewProducts() {
-        return productRepository.getNewProducts();
+        List<Product> products = productRepository.getNewProducts();
+
+        for(Product product : products) {
+            for (ProductImages productImage: product.getProductImages()) {
+                productImage.setBase64Image(Base64.toBase64String(productImage.getImage()));
+            }
+        }
+        return products;
     }
 
     public List<Product> getProductsByCategory(Long id) {
-        System.out.println(productRepository.findByCategory(id));
-        return productRepository.findByCategory(id);
+        List<Product> products  = productRepository.findByCategory(id);
+        for(Product product : products) {
+            for (ProductImages productImage: product.getProductImages()) {
+                productImage.setBase64Image(Base64.toBase64String(productImage.getImage()));
+            }
+        }
+        return products;
     }
 
     @Override

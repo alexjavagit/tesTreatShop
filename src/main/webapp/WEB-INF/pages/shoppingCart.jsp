@@ -27,7 +27,7 @@
                             <div class="col-md-3">
                                 <div class="booking-item-img-wrap">
                                     <a class="hover-img" href="/product/${product.getValue().id}">
-                                        <img src="data:;base64,${product.getValue().productImages[0].image}"
+                                        <img src="data:;base64,${product.getValue().productImages[0].base64Image}"
                                              alt="${product.getValue().name}" title="${product.getValue().name}"/></a>
                                     <div class="booking-item-img-num"></div>
                                 </div>

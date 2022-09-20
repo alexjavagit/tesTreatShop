@@ -181,7 +181,7 @@ public class AdminProductsController {
         Product product = productService.getById(Long.parseLong(model.getId()));
         List<ProductImages> listProductImages = new ArrayList<>();
 
-        ProductImages productImages = new ProductImages(null, product, null);
+        ProductImages productImages = new ProductImages(product, model.getFile().getName());
         productImagesService.saveUploadedImage(model.getFile(), productImages);
         listProductImages.add(productImages);
 

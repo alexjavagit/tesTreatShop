@@ -1,5 +1,6 @@
 package ua.kiev.prog.controller;
 
+import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,10 @@ public class ProductController {
             model.addAttribute("category", category);
 
             List<ProductImages> productImages = productImagesService.getProductImages(pid);
+            for (ProductImages productImage: product.getProductImages()) {
+                    productImage.setBase64Image(Base64.toBase64String(productImage.getImage()));
+            }
+
             model.addAttribute("productImages", productImages);
 
             List<CategorySizes> sizes = product.getCategorySizes();

@@ -56,7 +56,7 @@
                             <div class="col-md-3">
                                 <div class="booking-item-img-wrap">
                                     <a class="hover-img" href="/product/${orderItem.product.id}">
-                                        <img src="data:;base64,${orderItem.product.productImages[0].image}"
+                                        <img src="data:;base64,${orderItem.product.productImages[0].base64Image}"
                                              alt="${orderItem.product.name}" title="${orderItem.product.name}"/></a>
                                     <div class="booking-item-img-num"></div>
                                 </div>

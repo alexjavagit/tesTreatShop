@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
 
 import javax.persistence.*;
 
@@ -22,7 +24,21 @@ public class ProductImages {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    private String name;
+
     @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
-    private String image;
+    @Type(type="org.hibernate.type.BinaryType")
+    private byte[] image;
+
+    @Transient
+    private String base64Image;
+
+    public ProductImages(Product product, String name) {
+        this.product = product;
+        this.name = name;
+    }
+
+    public String getBase64Image() {
+        return Base64.toBase64String(this.image);
+    }
 }

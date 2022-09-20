@@ -25,5 +25,11 @@
         <property name="serverTimezone" value="UTC" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="alex2@localhost" uuid="ede5d0ad-5a5a-4ece-98c7-807fc8443b03">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/alex2</jdbc-url>
+    </data-source>
   </component>
 </project>
