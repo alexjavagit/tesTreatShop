@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.List;
 
 @Controller
-@ResponseBody
 public class MyController {
     @Autowired
     private UserService userService;
