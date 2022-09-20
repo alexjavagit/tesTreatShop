@@ -19,7 +19,7 @@ import ua.kiev.prog.service.UserService;
 import java.util.Collection;
 import java.util.List;
 
-@RestController
+@Controller
 public class MyController {
     @Autowired
     private UserService userService;
