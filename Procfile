@@ -1,1 +1,1 @@
-web java $JAVA_OPTS -jar --port $PORT target/shop.war
+web: java -jar target/shop.war
