@@ -94,7 +94,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <artifactId>webapp-runner</artifactId>
-                                    <version>8.0.24.0</version>
+                                    <version>9.0.52.1</version>
                                     <destFileName>webapp-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
