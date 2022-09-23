@@ -138,3 +138,30 @@
         #spring.http.multipart.max-file-size=50MB
         #spring.http.multipart.max-request-size=50MB
         #-----------------------------------------------
+
+
+
+        #spring.datasource.platform=postgres
+        #spring.datasource.url=postgres://vtbmydrobniuxr:74a516316f72e312147a6b48132672d312710f4296bc349a05b1e9e6d443cff1@ec2-34-247-72-29.eu-west-1.compute.amazonaws.com:5432/d5qtr46n9q6a95
+        #spring.jpa.show-sql=true
+        #spring.jpa.generate-ddl=true
+        #spring.jpa.hibernate.ddl-auto=none
+        #spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+        #server.port=${PORT:8080}
+        #java.runtime.version=1.8
+        #
+        #spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+        #spring.jpa.properties.hibernate.format_sql=true
+        #
+        #spring.mvc.view.prefix=/WEB-INF/pages/
+        #spring.mvc.view.suffix=.jsp
+        #
+        #logging.level.org.hibernate.SQL=DEBUG
+        #logging.level.org.hibernate.type.descriptor.sql=TRACE
+        #logging.level.org.springframework.web=DEBUG
+        #
+        #
+        #spring.http.multipart.enabled=false
+        #spring.http.multipart.max-file-size=50MB
+        #spring.http.multipart.max-request-size=50MB
+        #spring.profiles.active=@spring.profiles.active@
